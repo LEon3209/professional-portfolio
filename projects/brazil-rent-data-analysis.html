@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brazil Rent Data Analysis — Iraj Nayebkhil</title>
+  <meta name="description" content="Cleaned and modeled Brazilian rental-market data to predict prices. The analysis tests Linear Regression and Random Forest for prediction, explores the mar">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Iraj Nayebkhil<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#research">Research</a></li>
+      <li><a href="../index.html#work">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#certifications">Certs</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+  <header class="project-hero wrap">
+    <a href="../index.html#work" class="project-back">← Back to Projects</a>
+    <p class="project-kicker">R · Machine Learning · Clustering</p>
+    <h1 class="project-title">Brazil Rent<br>Data Analysis</h1>
+    <div class="project-meta">
+      <span>May 2023</span>
+      <span>·</span>
+      <span>Statistical Learning Project</span>
+    </div>
+    <p class="project-desc">
+      Cleaned and modeled Brazilian rental-market data to predict prices. The analysis tests Linear Regression and Random Forest for prediction, explores the market's structure with K-Means and hierarchical clustering, and evaluates everything through MAE and R-squared.
+    </p>
+    <div class="project-tags">
+      <span class="tag">R</span>
+      <span class="tag">Machine Learning</span>
+      <span class="tag">Clustering</span>
+    </div>
+  </header>
+
+  <!-- ===================== AT A GLANCE ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">At a Glance</div>
+    <h2 class="ps-title">The modelling menu</h2>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="ic-label">Prediction</div>
+        <div class="ic-value">LR · Random Forest</div>
+        <div class="ic-desc">Regression models trained to predict rental prices, scored on MAE and R².</div>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Structure</div>
+        <div class="ic-value">K-Means · Hierarchical</div>
+        <div class="ic-desc">Clustering to surface natural segments in the Brazilian rental market.</div>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Stack</div>
+        <div class="ic-value">R · tidyverse · caret</div>
+        <div class="ic-desc">The full analysis in R, from cleaning through model evaluation.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DOWNLOADS ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Code &amp; Data</div>
+    <h2 class="ps-title">Take it home</h2>
+    <p class="ps-body">The complete R code and the dataset are available for download. The full annotated script is below.</p>
+    <div class="repo-actions">
+      <a class="btn btn-primary" href="../files/Projects/01_Data-ML/Brazil-Rent-Analysis/Brazil-Rent-Analysis.zip" download>Download Project (ZIP)</a>
+      <a class="btn" href="../files/Projects/01_Data-ML/Brazil-Rent-Analysis/BrazHousesRent.csv" download>Dataset (CSV)</a>
+    </div>
+  </section>
+
+  <!-- ===================== REPORT ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Full Report</div>
+    <h2 class="ps-title">Read the full analysis</h2>
+    <p class="ps-body">The complete report covering data preparation, model comparisons, and clustering results.</p>
+    <div class="pdf-frame">
+      <iframe src="../files/Projects/01_Data-ML/Brazil-Rent-Analysis/OK_Means2Report.pdf#view=FitV" title="Brazil Rent Data Analysis (PDF)" loading="lazy"></iframe>
+    </div>
+    <p class="pdf-note">Viewer not loading? <a href="../files/Projects/01_Data-ML/Brazil-Rent-Analysis/OK_Means2Report.pdf" target="_blank" rel="noopener">Open the PDF in a new tab</a>.</p>
+    <div class="repo-actions">
+      <a class="btn btn-primary" href="../files/Projects/01_Data-ML/Brazil-Rent-Analysis/OK_Means2Report.pdf" download>Download Report (PDF)</a>
+    </div>
+  </section>
+
+  <!-- ===================== ANALYSIS ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">The Code</div>
+    <h2 class="ps-title">Full analysis script</h2>
+    <p class="ps-body">The complete R script, section by section — cleaning, exploration, modelling, and clustering.</p>
+    <div class="nb">
+      <details class="nb-sec">
+        <summary>Setup &amp; libraries</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code"># Importing the libraries needed 
+library(gam)
+library(xgboost)
+library(tidyverse)
+library(glmnet)
+library(caret)
+library(ggplot2)
+library(ggrepel)
+library(ggpubr)
+library(dplyr)
+library(plyr)
+library(maps)
+library(cowplot)
+library(MASS)
+library(rpart)
+library(rpart.plot)
+library(gglasso)
+library(factoextra)
+library(cluster)
+
+
+# Importing the dataset
+Data = read.csv(&quot;BrazHousesRent.csv&quot;, sep = &quot;,&quot;, dec = &quot;.&quot;, header = T, colClasses = &quot;character&quot;)</pre>
+        </div>
+      </details>
+      <details class="nb-sec">
+        <summary>1 — Overview of the dataset</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code"># Remiving duplicate rows
+Data &lt;- unique(Data)
+
+# Counting the occurences
+count_zero &lt;- sum(Data$floor == &quot;-&quot;)
+print(paste(&quot;The number of observations with floor &#x27;-&#x27; is:&quot;, count_zero))
+
+# Counting observations with floor &#x27;-&#x27; and hoa 0, we also show their proportion
+floor_abs &lt;- subset(Data, floor == &quot;-&quot;, select = hoa..R..)
+floor_abs[,1] = as.numeric(floor_abs[,1])
+count_zero &lt;- sum(floor_abs[, 1] == 0)
+print(paste(&quot;Number of observations with floor &#x27;-&#x27; and HOA = 0:&quot;, count_zero))
+print(paste(&quot;Proportion of observations with floor &#x27;-&#x27; and HOA = 0:&quot;, count_zero/length(floor_abs[, 1])))
+
+# Replace &#x27;-&#x27; by 0 in the floor column
+Data[Data == &quot;-&quot;] &lt;- 0
+
+# Set the variables to either numeric or factors
+categ &lt;- c(&quot;city&quot;,&quot;animal&quot;,&quot;furniture&quot;)
+cols &lt;- colnames(Data)
+for(i in 1:ncol(Data)){
+  if (cols[i] %in% categ){
+    Data[,i] = as.factor(Data[,i])
+  }else{
+    Data[,i] = as.numeric(Data[,i])
+  }
+}
+
+
+# Looking at the response variable
+
+# Function that computes the average rent amount for a given city
+average_rent_price &lt;- function(City) {
+  city_rent_amounts &lt;- subset(Data, city == City, select = rent.amount..R..)
+  average_rent &lt;- mean(city_rent_amounts$rent.amount..R..)
+  return(average_rent)
+}
+
+# Geospatial plot
+city_data &lt;- data.frame(
+  City = c(&quot;Belo Horizonte&quot;, &quot;Campinas&quot;, &quot;Porto Alegre&quot;, &quot;Rio de Janeiro&quot;, &quot;Sao Paulo&quot;),
+  Latitude = c(-19.9167, -22.9071, -30.0346, -22.9068, -23.5505),
+  Longitude = c(-43.9345, -47.0632, -51.2177, -43.1729, -46.6333),
+  Average_Rent = sapply(c(&quot;Belo Horizonte&quot;, &quot;Campinas&quot;, &quot;Porto Alegre&quot;, &quot;Rio de Janeiro&quot;, &quot;São Paulo&quot;), 
+                        function(x) average_rent_price(x))
+)
+
+city_data$Alpha &lt;- (city_data$Average_Rent -
+                      min(city_data$Average_Rent)) / (max(city_data$Average_Rent) 
+                                                      - min(city_data$Average_Rent))
+
+# Plot the geospatial data for Brazil only
+map_brazil &lt;- map_data(&quot;world&quot;, region = &quot;Brazil&quot;)
+
+# Create the plot
+ggplot() +
+  geom_polygon(data = map_brazil, aes(x = long, y = lat, group = group), fill = &quot;lightgray&quot;, color = &quot;white&quot;) +
+  geom_label_repel(data = city_data, aes(x = Longitude, y = Latitude, label = City), color = &quot;black&quot;, size = 3,
+                   box.padding = 0.5, point.padding = 0.2, force = 1, segment.color = &quot;transparent&quot;) +
+  geom_point(data = city_data, aes(x = Longitude, y = Latitude, color = Average_Rent), alpha = 0.8, size = 5) +
+  labs(title = &quot;Average Rent in Different Cities in Brazil&quot;,
+       x = &quot;Longitude&quot;,
+       y = &quot;Latitude&quot;) +
+  scale_color_gradient(low = &quot;blue&quot;, high = &quot;red&quot;) +
+  theme_minimal()
+
+# Correlation between fire insurance and rent amount
+cor(Data$fire.insurance..R..,Data$rent.amount..R..)</pre>
+        </div>
+      </details>
+      <details class="nb-sec">
+        <summary>3 — Lower Dimensional Models</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code"># Log linear regression model
+fit1 &lt;- lm(log(rent.amount..R..) ~ area,data = Data)
+summary(fit1)$coefficients
+
+# Decision tree
+dtree &lt;- rpart(rent.amount..R.. ~ rooms + furniture + bathroom, data = Data, method = &quot;anova&quot;)
+rpart.plot(dtree)</pre>
+        </div>
+      </details>
+      <details class="nb-sec">
+        <summary>4 — Getting the data ready</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code"># Continuous variables
+cont &lt;- c(&quot;area&quot;,&quot;fire.insurance..R..&quot;,&quot;property.tax..R..&quot;,&quot;hoa..R..&quot;, &quot;floor&quot;)
+
+#Removing outliers of continuous variables using IQR
+for(i in 1:ncol(Data)){
+  if (cols[i] %in% cont){
+    Q3 &lt;- quantile(Data[,i], .75)
+    IQR &lt;- IQR(Data[,i])
+    Data &lt;- subset(Data, Data[,i]&lt; (Q3 + 3.5*IQR))
+  }
+}
+
+# Boxplots for discrete variables
+discrete &lt;- c(&quot;rooms&quot;, &quot;floor&quot;, &quot;parking.spaces&quot;, &quot;bathroom&quot;)
+for(i in 1:length(discrete)){
+  boxplot(Data[, discrete[i]], xlab = discrete[i])
+}
+
+#Removing outliers from discrete variables
+Data &lt;- subset(Data, floor &lt; 40)
+Data &lt;- subset(Data, rooms &lt; 10)
+Data &lt;- subset(Data, bathroom &lt; 7)
+
+# Turning variables animal and furniture to 0s and 1s
+#Animal
+vec &lt;- Data$animal
+vec &lt;- as.character(vec)
+vec[vec == &quot;acept&quot;] &lt;- 1      # Replace &quot;acept&quot; by 1
+vec[vec == &quot;not acept&quot;] &lt;- 0       # Replace &quot;not acept&quot; by 0
+vec &lt;- as.factor(vec)
+Data$animal &lt;- vec
+
+#Furniture
+vec &lt;- Data$furniture
+vec &lt;- as.character(vec)
+vec[vec == &quot;furnished&quot;] &lt;- 1      # Replace &quot;furnished&quot; by 1
+vec[vec == &quot;not furnished&quot;] &lt;- 0       # Replace &quot;not furnished&quot; by 0
+vec &lt;- as.factor(vec)
+Data$furniture &lt;- vec
+
+#Train test split
+# We first split into training and test set, then we split the training set into a smaller training set and a validation set
+set.seed(1)
+trainrows &lt;- createDataPartition(Data$rent.amount..R.., p=0.8, list=FALSE)
+training_set &lt;- Data[trainrows,] # This is saved and will be scaled later to work on the test set
+d_test &lt;- Data[-trainrows,]
+trainrows &lt;- createDataPartition(training_set$rent.amount..R.., p=0.8, list=FALSE)
+d_train &lt;- training_set[trainrows,]
+d_val &lt;- training_set[-trainrows,]
+
+unscaled_rent_amounts &lt;- d_test$rent.amount..R.. # Will be saved for later use
+mean_tr &lt;- mean(training_set$rent.amount..R..)
+std_tr &lt;- sd(training_set$rent.amount..R..)
+
+# Scaling the data
+# We make a function that scales the data in dataset using the mean and sd of dataset2
+scale_data &lt;- function(dataset, dataset2) {
+  for(i in 1:ncol(dataset)){
+    if (is.numeric(dataset[1,i])){
+      dataset[,i] = scale(dataset[,i], center = mean(dataset2[,i]), scale = sd(dataset2[,i]))
+    }
+  }
+  return(dataset)
+} 
+
+# Scaling the training, validation and test sets
+d_val &lt;- scale_data(d_val, d_train)
+d_test &lt;- scale_data(d_test, training_set)
+d_train &lt;- scale_data(d_train, d_train) #Training set last since we use its mean and sd to scale the val set
+
+# Saving unencoded versions of training and validation sets
+d_train_unenc &lt;- d_train
+d_val_unenc &lt;- d_val
+
+# We make a function to encode the categorical variables in a dataset
+encode &lt;- function(dataset, excluded=c()) {
+  excluded_cols &lt;- dataset[, names(dataset) %in% excluded]
+  dataset &lt;- dataset[,!names(dataset) %in% excluded]
+  dmy &lt;- dummyVars(&quot; ~ .&quot;, data = dataset)
+  dataset &lt;- data.frame(predict(dmy, newdata = dataset))
+  dataset &lt;- cbind(dataset, excluded_cols)
+  return(dataset)
+}  
+
+# Encoding the categorical variables in the training, validation and test sets
+d_train &lt;- encode(d_train, c(&quot;animal&quot;, &quot;furniture&quot;))
+d_val &lt;- encode(d_val, c(&quot;animal&quot;, &quot;furniture&quot;))
+d_test &lt;- encode(d_test, c(&quot;animal&quot;, &quot;furniture&quot;))
+
+# Removing one city (presence of a house in this city would be represented by 0s in the other four city columns, so we can remove one city)
+d_train &lt;- subset(d_train, select = -c(city.Campinas))
+d_val &lt;- subset(d_val, select = -c(city.Campinas))
+d_test &lt;- subset(d_test, select = -c(city.Campinas))</pre>
+        </div>
+      </details>
+      <details class="nb-sec">
+        <summary>5.1 — AIC and BIC</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code"># Implemention of AIC and BIC stepwise selection for multiple regression models
+full.model &lt;- lm(rent.amount..R.. ~ ., data = d_train)
+step.model.aic &lt;- stepAIC(full.model, direction = &quot;both&quot;, trace = 0)
+
+step.model.bic &lt;- stepAIC(full.model, direction = &quot;both&quot;, trace = 0, k = log1p(nrow(d_train)))
+
+predictions.aic &lt;- predict(step.model.aic, newdata = d_val)
+predictions.bic &lt;- predict(step.model.bic, newdata = d_val)
+
+
+# Models&#x27; performance on the validation set
+aic_mse &lt;- mean((predictions.aic - d_val$rent.amount..R..)^2)
+bic_mse &lt;- mean((predictions.bic - d_val$rent.amount..R..)^2)
+aic_rmse &lt;- sqrt(aic_mse)
+bic_rmse &lt;- sqrt(bic_mse)
+aic_rsquared &lt;- summary(step.model.aic)$r.squared
+bic_rsquared &lt;- summary(step.model.bic)$r.squared
+
+#Data frame to store the evaluation metrics
+table &lt;- data.frame(
+  Model = character(),  
+  MSE = numeric(),
+  RMSE = numeric(),
+  R_squared = numeric()
+)
+table &lt;- rbind(table, c(&quot;AIC&quot;, round(aic_mse, 5), round(aic_rmse, 5), round(aic_rsquared, 5)))
+table &lt;- rbind(table, c(&quot;BIC&quot;, round(bic_mse, 5), round(bic_rmse, 5), round(bic_rsquared, 5)))
+colnames(table) &lt;- c(&quot;Model&quot;, &quot;MSE&quot;, &quot;RMSE&quot;, &quot;R_squared&quot;)
+
+summary(step.model.aic)
+summary(step.model.bic)
+
+print(table)
+
+# Residual plots
+bicplot &lt;- ggplot(data.frame(Fitted = step.model.bic$fitted.values, Residuals = step.model.bic$residuals), aes(x = Fitted, y = Residuals)) +
+  geom_point(color = &quot;blue&quot;) + 
+  theme_minimal() +
+  geom_hline(yintercept = 0, linetype = &quot;dashed&quot;, color = &quot;red&quot;) +
+  labs(title = &quot;Res vs. Fitted BIC&quot;, x = &quot;Fitted Values&quot;, y = &quot;Residuals&quot;)
+aicplot &lt;- ggplot(data.frame(Fitted = step.model.aic$fitted.values, Residuals = step.model.aic$residuals), aes(x = Fitted, y = Residuals)) +
+  geom_point(color = &quot;blue&quot;) + 
+  theme_minimal() +
+  geom_hline(yintercept = 0, linetype = &quot;dashed&quot;, color = &quot;red&quot;) +
+  labs(title = &quot;Res vs. Fitted AIC&quot;, x = &quot;Fitted Values&quot;, y = &quot;Residuals&quot;)
+ggarrange(aicplot,bicplot,nrow = 1,ncol = 2)</pre>
+        </div>
+      </details>
+      <details class="nb-sec">
+        <summary>5.2 — Lasso and Group-Lasso</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code"># Performing 10-fold cross validation
+X = model.matrix(rent.amount..R.. ~ ., data=d_train)[,-1]
+y = d_train$rent.amount..R..
+cvlasso = cv.glmnet(x = X, y = y,nfolds = 10)
+groups &lt;- c(1,1,1,1,2,3,4,5,6,7,8,9,10,11)
+glasso = cv.gglasso(x=X, y=y, group = groups,nfolds = 10)
+
+# Models&#x27; performance on the validation set using the lambda.min and lambda.1se
+
+pen_val &lt;- model.matrix(rent.amount..R.. ~ ., data=d_val)[,-1]
+lassopredmin &lt;- predict(cvlasso,pen_val, s = &quot;lambda.min&quot;)
+lmin_mse &lt;- mean((lassopredmin - d_val$rent.amount..R..)^2)
+lmin_rmse &lt;- sqrt(lmin_mse)
+lmin_Rsq &lt;- cor(lassopredmin,d_val$rent.amount..R..)^2
+lassopred1se &lt;- predict(cvlasso,pen_val, s = &quot;lambda.1se&quot;)
+lse_mse &lt;- mean((lassopred1se - d_val$rent.amount..R..)^2)
+
+glpred1 &lt;- predict(glasso,pen_val, s=&quot;lambda.1se&quot;)
+gl1_MSE &lt;- mean((glpred1 - d_val$rent.amount..R..)^2)
+gl1_Rsq &lt;- cor(glpred1,d_val$rent.amount..R..)^2
+glpred2 &lt;- predict(glasso,pen_val, s=&quot;lambda.min&quot;)
+gl2_MSE &lt;- mean((glpred2 - d_val$rent.amount..R..)^2)
+gl2_Rsq &lt;- cor(glpred2,d_val$rent.amount..R..)^2
+
+#Data frame to store the evaluation metrics
+table &lt;- data.frame(
+  Model = character(),  
+  MSE = numeric(),
+  RMSE = numeric(),
+  R_squared = numeric()
+)
+table &lt;- rbind(table, c(&quot;Lasso&quot;, round(lmin_mse, 5), round(sqrt(lmin_mse), 5), round(lmin_Rsq, 5)))
+table &lt;- rbind(table, c(&quot;grLasso&quot;, round(gl2_MSE, 5), round(sqrt(gl2_MSE), 5), round(gl2_Rsq, 5)))
+colnames(table) &lt;- c(&quot;Model&quot;, &quot;MSE&quot;, &quot;RMSE&quot;, &quot;R_squared&quot;)
+print(table)</pre>
+        </div>
+      </details>
+      <details class="nb-sec">
+        <summary>5.3 — GAM</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code"># Smoothing terms for numerical variables
+num_names = names(d_train_unenc)[d_train_unenc %&gt;% map_lgl(is.numeric)]
+num_names = num_names %&gt;% 
+  discard(~.x %in% c(&quot;rent.amount..R..&quot;))
+num_feat = num_names %&gt;% 
+  map_chr(~paste0(&quot;s(&quot;, .x, &quot;, 10)&quot;)) %&gt;%
+  paste(collapse = &quot;+&quot;)
+
+# Smoothing terms for categorical variables
+cat_feat = names(d_train_unenc)[d_train_unenc %&gt;% map_lgl(is.factor)] %&gt;% 
+  paste(collapse = &quot;+&quot;)
+
+# GAM formula
+gam_form = as.formula(paste0(&quot;rent.amount..R.. ~&quot;, num_feat, &quot;+&quot;, cat_feat))
+
+# Model fitting
+fit_gam = gam(formula = gam_form, family = &quot;gaussian&quot;, data = d_train_unenc)
+
+# Residuals plot
+ggplot(data.frame(Fitted = fit_gam$fitted.values, Residuals = fit_gam$residuals), aes(x = Fitted, y = Residuals)) +
+  geom_point(color = &quot;red&quot;) + 
+  theme_minimal() +
+  geom_hline(yintercept = 0, linetype = &quot;dashed&quot;, color = &quot;green&quot;) +
+  labs(title = &quot;Residuals vs Fitted Values&quot;, x = &quot;Fitted Values&quot;, y = &quot;Residuals&quot;)
+
+# Predicting the validation set
+predicted_values = predict(fit_gam, d_val_unenc) 
+
+# Evaluation metrics
+observed_values = d_val_unenc$rent.amount..R..
+gam_mse = mean((predicted_values - observed_values)^2)
+gam_rmse = sqrt(gam_mse)
+gam_rsquared = cor(predicted_values, observed_values)^2</pre>
+        </div>
+      </details>
+      <details class="nb-sec">
+        <summary>5.4 — XGBoost</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code"># Splitting dependent and independent variables
+X_train &lt;- d_train[, !(colnames(d_train) %in% c(&quot;rent.amount..R..&quot;))]
+y_train &lt;- as.numeric(d_train$rent.amount..R..)
+
+X_val &lt;- d_val[, !(colnames(d_val) %in% c(&quot;rent.amount..R..&quot;))]
+y_val &lt;- as.numeric(d_val$rent.amount..R..)
+
+#Make sure the columns are numeric before making the xgb.DMatrix that XGBoost is gonna use
+for(i in 1:ncol(X_train)){
+  X_train[,i] = as.numeric(X_train[,i])
+}
+
+for(i in 1:ncol(X_val)){
+  X_val[,i] = as.numeric(X_val[,i])
+}
+
+# Making the xgb.DMatrices
+xgb_train &lt;- xgb.DMatrix(data = as.matrix(X_train), label = y_train)
+xgb_val &lt;- xgb.DMatrix(data = as.matrix(X_val))
+
+# Parameter grid for 10-fold cv
+param_grid &lt;- expand.grid(
+  nrounds = c(100, 200, 300),
+  max_depth = c(3, 4, 5),             
+  eta = c(0.01, 0.05, 0.1),
+  gamma = 0,
+  colsample_bytree = 1,
+  min_child_weight = 1,  
+  subsample = 1   
+)
+# The other parameters that have a fixed value are included in the grid just because excluding them throws an error when we run cv, 
+# however we gave them a fixed value (default value of the model) so that we don&#x27;t include them in the cross validation process</pre>
+        </div>
+      </details>
+      <details class="nb-sec">
+        <summary>10 — fold cross-validation</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code">xgb_model &lt;- train(
+  X_train, y_train, 
+  method = &quot;xgbTree&quot;,
+  trControl = trainControl(method = &quot;cv&quot;, number = 10),
+  tuneGrid = param_grid,
+  metric = &#x27;RMSE&#x27;,
+  verbosity = 0
+)
+
+# Model fitting
+final_model &lt;- xgboost(
+  data = xgb_train, 
+  nrounds = xgb_model$bestTune$nrounds,
+  max_depth = xgb_model$bestTune$max_depth,
+  eta = xgb_model$bestTune$eta,
+  verbose = 0
+)
+
+# Evaluation of the model
+predictions &lt;- predict(final_model, newdata = xgb_val)
+xgb_mse &lt;- mean((predictions - y_val)^2)
+xgb_rmse &lt;- sqrt(xgb_mse)
+xgb_rsquared &lt;- 1 - (sum((y_val - predictions)^2) / sum((y_val - mean(y_val))^2))</pre>
+        </div>
+      </details>
+      <details class="nb-sec">
+        <summary>5.5 — Model Selection</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code">#Data frame to store the evaluation metrics
+table &lt;- data.frame(
+  Model = character(),  
+  MSE = numeric(),
+  RMSE = numeric(),
+  R_squared = numeric()
+)
+
+table &lt;- rbind(table, c(&quot;BIC&quot;, round(bic_mse, 5), round(bic_rmse, 5), round(bic_rsquared, 5)))
+table &lt;- rbind(table, c(&quot;LASSO&quot;, round(lmin_mse, 5), round(lmin_rmse, 5), round(lmin_Rsq, 5)))
+table &lt;- rbind(table, c(&quot;GAM&quot;, round(gam_mse, 5), round(gam_rmse, 5), round(gam_rsquared, 5)))
+table &lt;- rbind(table, c(&quot;XGBoost&quot;, round(xgb_mse, 5), round(xgb_rmse, 5), round(xgb_rsquared, 5)))
+colnames(table) &lt;- c(&quot;Model&quot;, &quot;MSE&quot;, &quot;RMSE&quot;, &quot;R_squared&quot;)
+
+print(table)</pre>
+        </div>
+      </details>
+      <details class="nb-sec">
+        <summary>6 — Prediction on the test set</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code"># Scaling and encoding training set
+training_set &lt;- scale_data(training_set, training_set)
+training_set &lt;- encode(training_set, c(&quot;animal&quot;, &quot;furniture&quot;))
+training_set &lt;- subset(training_set, select = -c(city.Campinas))
+
+# Splitting dependent and independent variables
+X_train &lt;- training_set[, !(colnames(training_set) %in% c(&quot;rent.amount..R..&quot;))]
+y_train &lt;- as.numeric(training_set$rent.amount..R..)
+
+X_test &lt;- d_test[, !(colnames(d_test) %in% c(&quot;rent.amount..R..&quot;))]
+y_test &lt;- as.numeric(d_test$rent.amount..R..)
+
+# Making sure the columns are numeric
+for(i in 1:ncol(X_train)){
+  X_train[,i] = as.numeric(X_train[,i])
+}
+for(i in 1:ncol(X_val)){
+  X_test[,i] = as.numeric(X_test[,i])
+}
+
+# Transforming the training and test sets to xgb.Dmatrices
+xgb_train &lt;- xgb.DMatrix(data = as.matrix(X_train), label = y_train)
+xgb_test &lt;- xgb.DMatrix(data = as.matrix(X_test))
+
+# Model fitting
+final_model &lt;- xgboost(
+  data = xgb_train, 
+  nrounds = xgb_model$bestTune$nrounds,
+  max_depth = xgb_model$bestTune$max_depth,
+  eta = xgb_model$bestTune$eta,
+  verbose = 0
+)
+
+# Predicting on the test set
+predictions &lt;- predict(final_model, newdata = xgb_test)
+unscaled_predictions &lt;- (predictions * std_tr) + mean_tr
+
+# Evaluation of the performance
+test_mse &lt;- mean((predictions - y_test)^2)
+test_rmse &lt;- sqrt(xgb_mse)
+test_rsquared &lt;- 1 - (sum((y_test - predictions)^2) / sum((y_test - mean(y_test))^2))
+unscaled_mse &lt;- mean((unscaled_predictions - unscaled_rent_amounts)^2)
+unscaled_rmse &lt;- sqrt(unscaled_mse)
+print(paste(&quot;MSE: &quot;, round(test_mse, 5)))
+print(paste(&quot;RMSE: &quot;, round(test_rmse, 5), &quot;| RMSE for unscaled predictions&quot;, round(unscaled_rmse, 5)))
+print(paste(&quot;R Squared: &quot;, round(xgb_rsquared, 5)))
+
+# We get the 95% confidence interval for the error of our model
+prediction_errors &lt;- unscaled_predictions - unscaled_rent_amounts
+
+# Mean and standard deviation of the prediction errors
+mean_error &lt;- mean(prediction_errors)
+std_error &lt;- sd(prediction_errors)
+
+# 95% confidence interval for the error
+confidence &lt;- 0.95
+z_value &lt;- qnorm(1 - (1 - confidence) / 2)
+lower_bound &lt;- mean_error - z_value * std_error  # Lower bound of the confidence interval
+upper_bound &lt;- mean_error + z_value * std_error  # Upper bound of the confidence interval
+
+cat(&quot;Confidence Interval (&quot;, confidence * 100, &quot;%): [&quot;, lower_bound, &quot;, &quot;, upper_bound, &quot;]\n&quot;)
+
+#Feature importance scores
+importance_scores &lt;- xgb.importance(
+  feature_names = colnames(X_train),
+  model = final_model
+)
+
+#Plot feature importance
+xgb.plot.importance(importance_matrix = importance_scores)
+
+# Scatterplot of Rent Amount vs Fire Insurance
+plot(Data$rent.amount..R.., Data$fire.insurance..R.., 
+     xlab = &quot;Rent Amount&quot;, ylab = &quot;Fire Insurance&quot;,
+     main = &quot;Scatter Plot of Rent Amount vs Fire Insurance&quot;)
+
+# Scatterplot of Rent Amount vs. Insurance by City
+ggplot(Data, aes(x = rent.amount..R.., y = fire.insurance..R.., color = city)) +
+  geom_point() +
+  labs(title = &quot;Rent Amount vs. Insurance by City&quot;) +
+  xlab(&quot;Rent Amount&quot;) +
+  ylab(&quot;Insurance&quot;)
+
+# Filtering independent houses and apartments in Belo Horizonte
+hoa_zero_data &lt;- subset(Data, Data$city == &quot;Belo Horizonte&quot; &amp; Data$hoa..R.. == 0 &amp; Data$floor == 0)
+hoa_nonzero_data &lt;- subset(Data, Data$city == &quot;Belo Horizonte&quot; &amp; Data$hoa..R.. != 0)
+hoa_data &lt;- rbind(transform(hoa_zero_data, Group = &quot;Independent&quot;),
+                  transform(hoa_nonzero_data, Group = &quot;Condominium&quot;))
+
+# Scatterplot differenciating both groups
+ggplot(hoa_data, aes(x = rent.amount..R.., y = fire.insurance..R.., color = Group)) +
+  geom_point() +
+  labs(title = &quot;Rent Amount vs. Insurance in Belo Horizonte&quot;,
+       subtitle = &quot;&quot;) +
+  xlab(&quot;Rent Amount&quot;) +
+  ylab(&quot;Insurance&quot;)</pre>
+        </div>
+      </details>
+      <details class="nb-sec">
+        <summary>7 — Clustering the houses for rental</summary>
+        <div class="nb-sec-body">
+      <pre class="nb-code">#REMOVE CATEGORICAL FEATURES
+Data_sc &lt;- Data %&gt;% select_if(is.numeric)
+Data_sc &lt;- as.data.frame(scale(Data_sc))
+
+dist_p &lt;- factoextra::get_dist(Data_sc,method = &quot;pearson&quot;)
+dist_e &lt;- factoextra::get_dist(Data_sc,method = &quot;euclidean&quot;)
+
+# Optimal K
+set.seed(444)
+
+sil_k &lt;- fviz_nbclust(
+  Data_sc,
+  FUNcluster = kmeans,
+  diss = dist_e,
+  method = &quot;silhouette&quot;,
+  print.summary = TRUE,
+  k.max = 10
+)
+silh &lt;-fviz_nbclust(
+  Data_sc,
+  FUNcluster = factoextra::hcut,
+  diss = dist_e,
+  method = &quot;silhouette&quot;,
+  print.summary = TRUE,
+  k.max = 10
+)
+print(paste(&quot;Best k for K-Means(sil):&quot;,which(sil_k$data$y == max(sil_k$data$y)),&quot;, for HC(sil):&quot;,which(silh$data$y == max(silh$data$y))))
+
+wssk &lt;-fviz_nbclust(
+  Data_sc,
+  FUNcluster = kmeans,
+  diss = dist_e,
+  method = &quot;wss&quot;,
+  print.summary = TRUE,
+  k.max = 10
+)
+wssh &lt;-fviz_nbclust(
+  Data_sc,
+  FUNcluster = hcut,
+  diss = dist_e,
+  method = &quot;wss&quot;,
+  print.summary = TRUE,
+  k.max = 10
+)
+
+# Elbow method plot
+ggarrange(wssk,wssh,ncol = 2,nrow = 1)
+
+# Trying with 2 clusters
+# kmeans
+km2 = kmeans(Data_sc, 2, nstart = 1, iter.max = 1e2)
+kmv2 &lt;- fviz_cluster(km2, data = Data_sc, geom = &quot;point&quot;, 
+                     ggtheme = theme_minimal(), main = &quot;K-Means&quot;)
+
+# Evaluating silhouette
+library(cluster)
+kmv2
+sk2 = silhouette(km2$cluster, 
+                 dist = dist_e)
+sk2v &lt;- fviz_silhouette(sk2,print.summary = FALSE)
+print(paste(&quot;K-Means AVG Silhouette width:&quot;,mean(sk2v$data$sil_width),&quot;, totWSS:&quot;,km2$tot.withinss))
+
+# Hierarchical
+hc2c &lt;- factoextra::hcut(x = dist_e, 
+                         k = 4,
+                         hc_method = &quot;ward.D2&quot;)
+e2c &lt;-factoextra::fviz_cluster(list(data = Data_sc, cluster = hc2c$cluster), main = &quot;Hierarchical&quot;,labelsize = 0)
+
+e2c # This plots partitions and silhouettes for both
+
+print(paste(&quot;Hierarchical&#x27;s AVG Silhouette width:&quot;,hc2c$silinfo$avg.width))
+print(paste(&quot;Agreement betweenn K-Means and HC&quot;,mclust::adjustedRandIndex(km2$cluster,hc2c$cluster)))
+
+# Making 2 dfs for each cluster
+clust1 &lt;- Data[which(km2$cluster == 1),]
+clust2 &lt;- Data[which(km2$cluster == 2),]
+
+# Avg rent in clust1 (cheaper housing)
+# clust2 is more expensive
+print(paste(&quot;Average rent amount in: Cluster 1:&quot;,round(mean(clust1$rent.amount..R..),3),&quot;, Cluster 2: &quot;,round(mean(clust2$rent.amount..R..),3)))
+print(paste(&quot;Percentage of houses in Cluster 1:&quot;,round(sum(as.numeric(summary(clust1$city))/nrow(Data)),3),&quot;, in Cluster 2:&quot;,round(sum(as.numeric(summary(clust2$city))/nrow(Data)),3)))
+print(paste(&quot;Average property tax in Cluster 1:&quot;,round(mean(clust1$property.tax..R..),3),&quot;, in Cluster 2:&quot;,round(mean(clust2$property.tax..R..),3)))
+print(paste(&quot;Average rent per room in Cluster 1:&quot;,round(mean(clust1$rent.amount..R../clust1$rooms),3),&quot;, in Cluster 2:&quot;,round(mean(clust2$rent.amount..R../clust2$rooms),3)))
+
+# Pie chart for cities with respect to cluster
+display_city_pie_chart &lt;- function(Data, data_name){  
+  
+  city_df &lt;- as.data.frame(table(Data$city))
+  colnames(city_df) &lt;- c(&quot;city&quot;, &quot;count&quot;)
+  
+  city_df$percentage &lt;- city_df$count / sum(city_df$count)
+  
+  ggplot(city_df, aes(x = &quot;&quot;, y = percentage, fill = city)) +
+    geom_bar(width = 1, stat = &quot;identity&quot;) +
+    coord_polar(&quot;y&quot;, start = 0) + 
+    scale_fill_brewer(palette = &quot;Set3&quot;) +
+    theme_void() +
+    labs(title = paste(&quot;Pie Chart of Cities in&quot;, data_name), fill = &quot;City&quot;)
+}
+
+pie1 &lt;- display_city_pie_chart(clust1,&quot;Cluster1&quot;)
+pie2 &lt;- display_city_pie_chart(clust2,&quot;Cluster2&quot;)
+ggarrange(pie1,pie2,nrow = 1,ncol = 2)</pre>
+        </div>
+      </details>    </div>
+  </section>
+
+
+  </main>
+
+  <footer>
+    <span>© 2026 Iraj Nayebkhil</span>
+    <span>Geneva · Switzerland</span>
+    <span><a href="../index.html#work" style="color:var(--muted);text-decoration:none;">← All Projects</a></span>
+  </footer>
+
+</body>
+</html>

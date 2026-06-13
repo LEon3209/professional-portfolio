@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boardroom Diversity: Northrop Grumman vs Thales — Iraj Nayebkhil</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .project-hero { padding-block: clamp(4rem, 10vw, 7rem) 3rem; border-bottom: 1px solid var(--border); }
+    .project-back { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; margin-bottom: 2.5rem; transition: color 0.2s; }
+    .project-back:hover { color: var(--purple); }
+    .project-kicker { font-size: 0.74rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--orange); margin-bottom: 1rem; }
+    .project-title { font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.05; margin-bottom: 1.4rem; }
+    .project-meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: 0.78rem; color: var(--muted); margin-bottom: 1.6rem; }
+    .project-desc { color: var(--muted); font-size: 0.94rem; line-height: 1.85; max-width: 62ch; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.4rem; }
+
+    .cover-frame { margin-top: 2.4rem; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: #0c0a12; }
+    .cover-frame img { display: block; width: 100%; }
+
+    .project-section { padding-block: 4rem; border-bottom: 1px solid var(--border); }
+    .project-section:last-child { border-bottom: none; }
+    .ps-label { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--purple); margin-bottom: 1.8rem; }
+    .ps-title { font-family: var(--serif); font-weight: 400; font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1rem; }
+    .ps-body { color: var(--muted); font-size: 0.92rem; line-height: 1.85; max-width: 64ch; }
+    .ps-body + .ps-body { margin-top: 1.1rem; }
+
+    .insights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 1.8rem; }
+    .insight-card { border: 1px solid var(--border); border-radius: 14px; padding: 1.4rem 1.5rem; background: var(--bg-2); }
+    .ic-label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .ic-value { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; color: var(--ink); margin-bottom: 0.3rem; }
+    .ic-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+
+    .cmp-table { width: 100%; border-collapse: collapse; margin-top: 1.8rem; font-size: 0.86rem; }
+    .cmp-table th, .cmp-table td { text-align: left; padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); }
+    .cmp-table th { font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+    .cmp-table td:first-child { color: var(--ink); }
+    .cmp-table td { color: var(--muted); }
+
+    .repo-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.8rem; }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Iraj Nayebkhil<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#research">Research</a></li>
+      <li><a href="../index.html#work">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#certifications">Certs</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+  <header class="project-hero wrap">
+    <a href="../index.html#work" class="project-back">← Back to Projects</a>
+    <p class="project-kicker">Strategic HR Management · Statistics</p>
+    <h1 class="project-title">Boardroom Diversity:<br>Northrop Grumman vs Thales</h1>
+    <div class="project-meta">
+      <span>Jan 2025</span>
+      <span>·</span>
+      <span>Individual Assignment · SHRM</span>
+    </div>
+    <p class="project-desc">
+      A comparative study of diversity in the governance structures of two aerospace &amp; defense
+      giants — Northrop Grumman (USA) and Thales (France). Using a hand-built dataset of board and
+      committee members, it combines exploratory analysis with hypothesis testing to ask how gender,
+      age, education, and tenure shape leadership in each firm.
+    </p>
+    <div class="project-tags">
+      <span class="tag">Python</span>
+      <span class="tag">SciPy</span>
+      <span class="tag">Statistics</span>
+    </div>
+
+    <div class="cover-frame">
+      <img src="covers/corporate-governance-hypothesis-testing.svg" alt="">
+    </div>
+  </header>
+
+  <!-- ===================== SNAPSHOT ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">At a Glance</div>
+    <h2 class="ps-title">Two firms, two leadership profiles</h2>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th>Metric</th><th>Northrop Grumman</th><th>Thales</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Members analysed</td><td>28</td><td>31</td></tr>
+        <tr><td>Gender split</td><td>14 M / 14 F (balanced)</td><td>20 M / 11 F</td></tr>
+        <tr><td>Avg. tenure in role</td><td>5.43 yrs</td><td>7.93 yrs</td></tr>
+        <tr><td>Avg. tenure in company</td><td>9.25 yrs</td><td>12.42 yrs</td></tr>
+        <tr><td>Master's degree holders</td><td>61.5%</td><td>76.7%</td></tr>
+        <tr><td>PhD holders</td><td>7.7%</td><td>13.3%</td></tr>
+        <tr><td>Dominant age band</td><td>61–70</td><td>51–60</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== HYPOTHESIS TESTS ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Hypothesis Testing</div>
+    <h2 class="ps-title">Do sociological features shape careers?</h2>
+
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="ic-label">Gender &amp; Tenure · t-test</div>
+        <div class="ic-value">No difference</div>
+        <div class="ic-desc">Tenure does not differ significantly by gender at either firm (p = 0.867 Northrop, 0.514 Thales). Fail to reject H₀.</div>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Education &amp; Role · chi-square</div>
+        <div class="ic-value">Independent</div>
+        <div class="ic-desc">Educational field is not associated with governance role (p = 0.595 Northrop, 0.453 Thales). Fail to reject H₀.</div>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Age &amp; Tenure · correlation</div>
+        <div class="ic-value">Thales: p = 0.008</div>
+        <div class="ic-desc">A significant age–tenure correlation at Thales (reject H₀); Northrop is only marginal (p = 0.08). Experience is more tightly tied to progression at Thales.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INTERPRETATION ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">What it means</div>
+    <h2 class="ps-title">Two distinct, complementary stories</h2>
+    <p class="ps-body">
+      Northrop Grumman stands out for gender-balanced leadership and more dynamic role transitions,
+      pointing to adaptability and flexible career pathways. Thales, by contrast, has a more highly
+      educated governance body — with nearly double the share of PhDs — and retains experienced
+      professionals in long-term roles, reflecting an emphasis on stability and expertise.
+    </p>
+    <p class="ps-body">
+      The statistics add nuance: gender does not significantly affect tenure at either company,
+      suggesting equality in role longevity once leadership is reached. But the significant age–tenure
+      link at Thales hints at a workforce where accumulated experience maps more directly onto career
+      progression — a difference that may partly reflect the two firms' national and organisational
+      cultures.
+    </p>
+  </section>
+
+  <!-- ===================== REPOSITORY ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Report &amp; Code</div>
+    <h2 class="ps-title">Read the full analysis</h2>
+    <p class="ps-body">The written report, notebook, and datasets are available below.</p>
+    <div class="repo-actions">
+      <a class="btn btn-primary" href="../files/Projects/01_Data-ML/Governance-Diversity/Governance-Diversity-NG-vs-Thales.pdf" target="_blank" rel="noopener">Read Report (PDF) ↗</a>
+      <a class="btn" href="https://github.com/LEon3209/Individual_Assignment_SHRIM" target="_blank" rel="noopener">View Repository ↗</a>
+      <a class="btn" href="https://github.com/LEon3209/Individual_Assignment_SHRIM/blob/main/hypothesistesting.ipynb" target="_blank" rel="noopener">Open Notebook ↗</a>
+    </div>
+  </section>
+
+  </main>
+
+  <footer>
+    <span>© 2026 Iraj Nayebkhil</span>
+    <span>Geneva · Switzerland</span>
+    <span><a href="../index.html#work" style="color:var(--muted);text-decoration:none;">← All Projects</a></span>
+  </footer>
+
+</body>
+</html>

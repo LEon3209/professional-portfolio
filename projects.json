@@ -1,0 +1,223 @@
+[
+  {
+    "title": "Boards vs Executive Committees",
+    "description": "HR-analytics project comparing the composition of Boards of Directors and Executive Committees — data cleaning, exploratory analysis, and linear regression on member attributes.",
+    "tags": [
+      "Python",
+      "Regression"
+    ],
+    "category": "Data & Analytics",
+    "date": "2024-12-01",
+    "page": "projects/boards-vs-executive-committees.html",
+    "image": "projects/covers/previews/boards-vs-executive-committees.png",
+    "hidden": true
+  },
+  {
+    "title": "Boardroom Diversity: Northrop Grumman vs Thales",
+    "description": "Comparative diversity analysis of two aerospace & defense firms' governance bodies — exploratory analysis plus hypothesis testing (t-test, chi-square, correlation) on gender, age, education, and tenure.",
+    "tags": [
+      "Python",
+      "Statistics"
+    ],
+    "category": "Data & Analytics",
+    "date": "2025-01-01",
+    "page": "projects/corporate-governance-hypothesis-testing.html",
+    "image": "projects/covers/previews/corporate-governance-hypothesis-testing.png"
+  },
+  {
+    "title": "Amazon Prime Video Dashboard",
+    "description": "Interactive Tableau dashboard analyzing the Amazon Prime Video catalog — content trends, ratings, genres, and release patterns — featuring custom radial bar charts and branded design.",
+    "tags": [
+      "Tableau",
+      "Data Viz"
+    ],
+    "category": "Data & Analytics",
+    "date": "2026-01-01",
+    "page": "projects/amazon-prime-dashboard.html",
+    "image": "projects/covers/previews/amazon-prime-video-dashboard.png"
+  },
+  {
+    "title": "IBM HR Analytics Dashboard",
+    "description": "Tableau dashboard exploring IBM HR data — employee attrition, demographics, and satisfaction drivers — to surface actionable workforce insights.",
+    "tags": [
+      "Tableau",
+      "Data Viz"
+    ],
+    "category": "Data & Analytics",
+    "date": "2025-12-01",
+    "page": "projects/ibm-hr-dashboard.html",
+    "image": "projects/covers/previews/ibm-hr-analytics-dashboard.png"
+  },
+  {
+    "title": "Bike Sales Excel Dashboard",
+    "description": "Interactive Excel dashboard analyzing bike sales by demographics and purchasing behavior, with pivot tables, slicers, and charts for self-serve exploration.",
+    "tags": [
+      "Excel",
+      "Data Viz"
+    ],
+    "category": "Data & Analytics",
+    "date": "2025-11-01",
+    "page": "projects/bike-sales-dashboard.html",
+    "image": "projects/covers/previews/bike-sales-excel-dashboard.png"
+  },
+  {
+    "title": "Brazil Rent Data Analysis",
+    "description": "Cleaned and modeled Brazilian rental data to predict prices. Tested Linear Regression, Random Forest, and clustering (K-Means, Hierarchical), evaluating models via MAE and R-squared for market insights.",
+    "tags": [
+      "R",
+      "Machine Learning"
+    ],
+    "category": "Data & Analytics",
+    "date": "2023-05-01",
+    "page": "projects/brazil-rent-data-analysis.html",
+    "image": "projects/covers/previews/brazil-rent-data-analysis.png"
+  },
+  {
+    "title": "Social Media Share Predictor",
+    "description": "Machine learning tool to predict social media post shares. Conducted EDA, handled outliers, and engineered features, then compared Linear Regression, Random Forest, and ANNs with 10-fold cross-validation.",
+    "tags": [
+      "Python",
+      "Machine Learning"
+    ],
+    "category": "Data & Analytics",
+    "date": "2023-05-01",
+    "page": "projects/social-media-share-predictor.html",
+    "image": "projects/covers/previews/social-media-share-predictor.png"
+  },
+  {
+    "title": "Genre-Based Music Recommendation System",
+    "description": "Bachelor's thesis: built a genre-based Spotify recommender using Spotify's Web API. Leveraged users' listening history and preferences to generate personalized recommendations, with a survey to evaluate recommendation quality.",
+    "tags": [
+      "Python",
+      "Machine Learning"
+    ],
+    "category": "Thesis",
+    "date": "2024-07-01",
+    "page": "projects/genre-based-music-recommendation-system.html",
+    "image": "projects/covers/previews/genre-based-music-recommendation-system.png"
+  },
+  {
+    "title": "IBM Strategic Growth Analysis",
+    "description": "Strategic management case on IBM: built a quantified 'growth corridor', conducted SWOT analysis, and modeled growth scenarios to assess strategic direction.",
+    "tags": [
+      "Strategy",
+      "Case Study"
+    ],
+    "category": "Strategy & Business",
+    "date": "2025-12-01",
+    "page": "projects/ibm-strategic-growth-analysis.html",
+    "image": "projects/covers/previews/ibm-strategic-growth-analysis.png"
+  },
+  {
+    "title": "Entrepreneurship Lab — Azure Cell Therapies",
+    "description": "Collaborated with biotech startup Azure Cell Therapies to develop a sustainable business model. Applied Theory of Change, Product-Market Fit, and Materiality Assessment frameworks.",
+    "tags": [
+      "Entrepreneurship",
+      "Sustainability"
+    ],
+    "category": "Strategy & Business",
+    "date": "2025-05-01",
+    "page": "projects/entrepreneurship-lab-azure-cell-therapies.html",
+    "image": "projects/covers/previews/entrepreneurship-lab-azure-cell-therapies.png",
+    "hidden": true
+  },
+  {
+    "title": "Engaging Key Stakeholders for School Connectivity in Ethiopia",
+    "description": "Global-strategy and market-research report on connecting schools to the internet in Ethiopia, developed within the Giga initiative framework — assessing feasibility, stakeholders, and impact.",
+    "tags": [
+      "Strategy",
+      "Market Research"
+    ],
+    "category": "Strategy & Business",
+    "date": "2025-11-01",
+    "page": "projects/school-connectivity-in-ethiopia-giga.html",
+    "image": "projects/covers/previews/school-connectivity-in-ethiopia-giga.png"
+  },
+  {
+    "title": "Safely — Digital Economy & Innovation",
+    "description": "Report and presentation proposing 'Safely', a digital-economy concept — covering the problem space, platform model, and innovation strategy.",
+    "tags": [
+      "Innovation",
+      "Strategy"
+    ],
+    "category": "Strategy & Business",
+    "date": "2024-12-01",
+    "page": "projects/safely-digital-economy-innovation.html",
+    "image": "projects/covers/previews/safely-digital-economy-innovation.png"
+  },
+  {
+    "title": "Business Model Canvas",
+    "description": "A structured Business Model Canvas mapping value proposition, customer segments, channels, revenue streams, and cost structure for a venture analysis.",
+    "tags": [
+      "Strategy",
+      "Business"
+    ],
+    "category": "Strategy & Business",
+    "date": "2025-10-01",
+    "page": "projects/business-model-canvas.html",
+    "image": "projects/covers/previews/business-model-canvas.png",
+    "hidden": true
+  },
+  {
+    "title": "Strategic HR Management",
+    "description": "Strategic human-resource management report linking HR practices to organizational strategy and performance.",
+    "tags": [
+      "HR",
+      "Strategy"
+    ],
+    "category": "Strategy & Business",
+    "date": "2025-10-01",
+    "page": "projects/strategic-hr-management.html",
+    "image": "projects/covers/previews/strategic-hr-management.png",
+    "hidden": true
+  },
+  {
+    "title": "CISG Milk Powder Case",
+    "description": "Business-law case analysis under the CISG (international sale of goods), examining contract formation, obligations, and remedies in a milk-powder dispute.",
+    "tags": [
+      "Law",
+      "Analysis"
+    ],
+    "category": "Strategy & Business",
+    "date": "2025-09-01",
+    "page": "projects/cisg-milk-powder-case.html",
+    "image": "projects/covers/previews/cisg-milk-powder-case.png",
+    "hidden": true
+  },
+  {
+    "title": "Portfolio Optimization & Financial Analysis",
+    "description": "Finance project covering portfolio optimization (beta estimation, optimal portfolio construction) and a regression analysis of Alphabet and Netflix returns. Includes firm analysis, credit risk, and pro-forma financial statements.",
+    "tags": [
+      "Finance",
+      "Python"
+    ],
+    "category": "Finance",
+    "date": "2024-06-01",
+    "page": "projects/portfolio-optimization-financial-analysis.html",
+    "image": "projects/covers/previews/portfolio-optimization-financial-analysis.png"
+  },
+  {
+    "title": "JP Morgan Market Memorandum",
+    "description": "Finance and market-research memorandum analyzing a company/market opportunity with supporting data and a clear investment narrative.",
+    "tags": [
+      "Finance",
+      "Market Research"
+    ],
+    "category": "Finance",
+    "date": "2025-11-01",
+    "page": "projects/jp-morgan-market-memorandum.html",
+    "image": "projects/covers/previews/jp-morgan-market-memorandum.png"
+  },
+  {
+    "title": "UNIGE Instagram Takeover",
+    "description": "Ran the University of Geneva's official Instagram (@unigeneve) for a day, covering a live event through stories and posts with a student's voice — certified by UNIGE's communication service.",
+    "tags": [
+      "Social Media",
+      "Live Coverage"
+    ],
+    "category": "Media & Communication",
+    "date": "2026-06-03",
+    "page": "projects/unige-instagram-takeover.html",
+    "image": "projects/covers/previews/unige-instagram-takeover.png"
+  }
+]

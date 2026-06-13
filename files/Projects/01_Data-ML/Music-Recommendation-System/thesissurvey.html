@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovering New Genre Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: black;
+        }
+        .consent {
+            margin: 20px;
+            color: grey;
+            font-size: 13px;
+        }
+        .start-button {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            /* Initially disabled */
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        /* Style for the checkbox label */
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Discovering New Genre Survey</h1>
+    <p>This survey is designed to test out a music recommendation system based on your preferred genres. 
+    Your response will help in assessing the algorithm as a tool to better suit recommendations to a listener's musical taste.</p>
+    <div class="consent">
+        <label>
+            <input type="checkbox" id="consentCheckbox">
+            I consent to share data regarding my personal playlist for this survey. I am aware that only the songs from the playlist will be considered, and none of my personal or account details will be accessed.
+        </label>
+    </div>
+    <button class="start-button" id="startButton" onclick="window.location.href='instructions.html';">Start Survey</button>
+</div>
+
+<script>
+    document.getElementById('consentCheckbox').addEventListener('change', function() {
+        const button = document.getElementById('startButton');
+        button.disabled = !this.checked;
+        if (this.checked) {
+            button.style.pointerEvents = 'auto';
+            button.style.opacity = 1;
+        } else {
+            button.style.pointerEvents = 'none';
+            button.style.opacity = 0.5;
+        }
+    });
+</script>
+
+</body>
+</html>

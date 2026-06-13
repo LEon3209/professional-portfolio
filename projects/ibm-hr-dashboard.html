@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBM HR Analytics Dashboard — Iraj Nayebkhil</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .project-hero { padding-block: clamp(4rem, 10vw, 7rem) 3rem; border-bottom: 1px solid var(--border); }
+    .project-back { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; margin-bottom: 2.5rem; transition: color 0.2s; }
+    .project-back:hover { color: var(--purple); }
+    .project-kicker { font-size: 0.74rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--orange); margin-bottom: 1rem; }
+    .project-title { font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.05; margin-bottom: 1.4rem; }
+    .project-meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: 0.78rem; color: var(--muted); margin-bottom: 1.6rem; }
+    .project-meta span { display: flex; align-items: center; gap: 0.35rem; }
+    .project-desc { color: var(--muted); font-size: 0.94rem; line-height: 1.85; max-width: 60ch; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.4rem; }
+
+    .project-section { padding-block: 4rem; border-bottom: 1px solid var(--border); }
+    .project-section:last-child { border-bottom: none; }
+    .ps-label { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--purple); margin-bottom: 1.8rem; }
+    .ps-title { font-family: var(--serif); font-weight: 400; font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1rem; }
+    .ps-body { color: var(--muted); font-size: 0.92rem; line-height: 1.85; max-width: 64ch; }
+
+    /* Tableau embed container */
+    .tableau-wrap {
+      width: 100%;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+    .tableau-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 480px;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+      text-align: center;
+      padding: 2rem;
+    }
+    .tableau-placeholder .ph-icon { font-size: 2.4rem; opacity: 0.3; }
+    .tableau-placeholder code { font-size: 0.76rem; background: var(--bg); padding: 0.2em 0.5em; border: 1px solid var(--border); border-radius: 2px; color: var(--purple); }
+
+    /* Insights grid */
+    .insights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 1.8rem; }
+    .insight-card { border: 1px solid var(--border); padding: 1.4rem 1.5rem; background: var(--bg-2); }
+    .ic-label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .ic-value { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; color: var(--ink); margin-bottom: 0.3rem; }
+    .ic-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Iraj Nayebkhil<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#research">Research</a></li>
+      <li><a href="../index.html#work">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#certifications">Certs</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="project-hero wrap">
+    <a href="../index.html#work" class="project-back">← Back to Work</a>
+    <p class="project-kicker">Tableau · Data Viz · Analytics</p>
+    <h1 class="project-title">IBM HR Analytics<br>Dashboard</h1>
+    <div class="project-meta">
+      <span>Dec 2025</span>
+      <span>·</span>
+      <span>Tableau Public</span>
+    </div>
+    <p class="project-desc">
+      An interactive Tableau dashboard exploring IBM's HR dataset — surfacing patterns in employee
+      attrition, demographics, job satisfaction, and compensation. Built to turn raw workforce data
+      into clear, actionable insights for HR decision-makers.
+    </p>
+    <div class="project-tags">
+      <span class="tag">Tableau</span>
+      <span class="tag">Data Viz</span>
+      <span class="tag">Analytics</span>
+      <span class="tag">HR</span>
+    </div>
+  </header>
+
+  <!-- ===================== LIVE DASHBOARD ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Live Dashboard</div>
+
+    <div class="tableau-wrap">
+      <div class='tableauPlaceholder' id='viz1780831499756' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;IB&#47;IBMHR-Dashboard&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='IBMHR-Dashboard&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;IB&#47;IBMHR-Dashboard&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div><script type='text/javascript'>var divElement = document.getElementById('viz1780831499756'); var vizElement = divElement.getElementsByTagName('object')[0]; if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='2327px';} var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);</script>
+    </div>
+  </section>
+
+  <!-- ===================== KEY INSIGHTS ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Key Findings</div>
+    <h2 class="ps-title">What the data shows</h2>
+
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="ic-label">Attrition Rate</div>
+        <div class="ic-value">~16%</div>
+        <div class="ic-desc">Overall attrition rate in the dataset, highest among Sales Representatives and Lab Technicians.</div>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Satisfaction Driver</div>
+        <div class="ic-value">WLB</div>
+        <div class="ic-desc">Work-life balance emerges as the strongest predictor of job satisfaction across all departments.</div>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Tenure Risk</div>
+        <div class="ic-value">0–2 yrs</div>
+        <div class="ic-desc">Employees in their first two years are significantly more likely to leave than longer-tenured staff.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== METHODOLOGY ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Methodology</div>
+    <h2 class="ps-title">How it was built</h2>
+    <p class="ps-body">
+      The IBM HR Analytics dataset contains 1,470 employee records across 35 variables. Data was cleaned
+      and structured in Tableau Prep before connecting to Tableau Desktop. Custom calculated fields were
+      used to derive attrition segments, satisfaction composites, and compensation bands. The final
+      dashboard uses a coordinated filter system so every chart updates from a single click.
+    </p>
+  </section>
+
+  <footer>
+    <span>© 2026 Iraj Nayebkhil</span>
+    <span>Geneva · Switzerland</span>
+    <span><a href="../index.html#work" style="color:var(--muted);text-decoration:none;">← All Projects</a></span>
+  </footer>
+
+</body>
+</html>

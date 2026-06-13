@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boards vs Executive Committees — Iraj Nayebkhil</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .project-hero { padding-block: clamp(4rem, 10vw, 7rem) 3rem; border-bottom: 1px solid var(--border); }
+    .project-back { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; margin-bottom: 2.5rem; transition: color 0.2s; }
+    .project-back:hover { color: var(--purple); }
+    .project-kicker { font-size: 0.74rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--orange); margin-bottom: 1rem; }
+    .project-title { font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.05; margin-bottom: 1.4rem; }
+    .project-meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: 0.78rem; color: var(--muted); margin-bottom: 1.6rem; }
+    .project-desc { color: var(--muted); font-size: 0.94rem; line-height: 1.85; max-width: 62ch; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.4rem; }
+
+    .cover-frame { margin-top: 2.4rem; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: #0c0a12; }
+    .cover-frame img { display: block; width: 100%; }
+
+    .project-section { padding-block: 4rem; border-bottom: 1px solid var(--border); }
+    .project-section:last-child { border-bottom: none; }
+    .ps-label { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--purple); margin-bottom: 1.8rem; }
+    .ps-title { font-family: var(--serif); font-weight: 400; font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1rem; }
+    .ps-body { color: var(--muted); font-size: 0.92rem; line-height: 1.85; max-width: 64ch; }
+
+    .insights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 1.8rem; }
+    .insight-card { border: 1px solid var(--border); border-radius: 14px; padding: 1.4rem 1.5rem; background: var(--bg-2); }
+    .ic-label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .ic-value { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; color: var(--ink); margin-bottom: 0.3rem; }
+    .ic-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+
+    .repo-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.8rem; }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Iraj Nayebkhil<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#research">Research</a></li>
+      <li><a href="../index.html#work">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#certifications">Certs</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+  <header class="project-hero wrap">
+    <a href="../index.html#work" class="project-back">← Back to Projects</a>
+    <p class="project-kicker">Python · pandas · Regression</p>
+    <h1 class="project-title">Boards vs<br>Executive Committees</h1>
+    <div class="project-meta">
+      <span>Dec 2024</span>
+      <span>·</span>
+      <span>HR Analytics Project</span>
+    </div>
+    <p class="project-desc">
+      An HR-analytics project comparing the composition of Boards of Directors and Executive Committees.
+      Starting from a cleaned governance dataset, it uses exploratory analysis and linear regression to
+      examine how member attributes differ between the two bodies and what they relate to.
+    </p>
+    <div class="project-tags">
+      <span class="tag">Python</span>
+      <span class="tag">Regression</span>
+      <span class="tag">HR Analytics</span>
+    </div>
+
+    <div class="cover-frame">
+      <img src="covers/boards-vs-executive-committees.svg" alt="">
+    </div>
+  </header>
+
+  <!-- ===================== APPROACH ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Approach</div>
+    <h2 class="ps-title">How it was built</h2>
+
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="ic-label">Pipeline</div>
+        <div class="ic-value">Clean → EDA → Model</div>
+        <div class="ic-desc">A reproducible workflow from a cleaned dataset through exploratory analysis to a regression model.</div>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Comparison</div>
+        <div class="ic-value">BoD vs ExCo</div>
+        <div class="ic-desc">Two governance bodies analysed side by side to surface differences in composition.</div>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Method</div>
+        <div class="ic-value">Linear Regression</div>
+        <div class="ic-desc">OLS regression used to model relationships between member attributes and governance roles.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== METHODOLOGY ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Methodology</div>
+    <h2 class="ps-title">From data to model</h2>
+    <p class="ps-body">
+      The project starts from a manually cleaned governance dataset. The exploratory phase profiles the
+      distributions of member attributes — age, tenure, gender, and educational background — and the
+      correlations between them, comparing how those distributions differ across Boards of Directors and
+      Executive Committees. A linear-regression model then quantifies the relationships, with the two
+      notebooks (EDA and regression) kept separate for clarity and reproducibility.
+    </p>
+  </section>
+
+  <!-- ===================== REPOSITORY ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Code &amp; Data</div>
+    <h2 class="ps-title">Explore the analysis</h2>
+    <p class="ps-body">The cleaned dataset and both notebooks (EDA and regression) are on GitHub.</p>
+    <div class="repo-actions">
+      <a class="btn btn-primary" href="https://github.com/LEon3209/Compartive-Analysis-of-BODs-and-ECs" target="_blank" rel="noopener">View Repository ↗</a>
+      <a class="btn" href="https://github.com/LEon3209/Compartive-Analysis-of-BODs-and-ECs/blob/main/Hr-Project_Eda.ipynb" target="_blank" rel="noopener">EDA Notebook ↗</a>
+      <a class="btn" href="https://github.com/LEon3209/Compartive-Analysis-of-BODs-and-ECs/blob/main/Hr-Project%20_lin_Reg.ipynb" target="_blank" rel="noopener">Regression Notebook ↗</a>
+    </div>
+  </section>
+
+  </main>
+
+  <footer>
+    <span>© 2026 Iraj Nayebkhil</span>
+    <span>Geneva · Switzerland</span>
+    <span><a href="../index.html#work" style="color:var(--muted);text-decoration:none;">← All Projects</a></span>
+  </footer>
+
+</body>
+</html>

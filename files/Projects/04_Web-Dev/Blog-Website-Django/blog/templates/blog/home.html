@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="jumbotron mt-4">
+        <h1 class="display-4">Welcome to My Blog!</h1>
+        <p class="lead">This is a simple blog website built with Django.</p>
+        <hr class="my-4">
+        <p>Click the button below to view all posts or create a new post.</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'post_list' %}" role="button">View all posts</a>
+        <a class="btn btn-secondary btn-lg" href="{% url 'create_blog' %}" role="button">Create a new post</a>
+    </div>
+{% endblock %}

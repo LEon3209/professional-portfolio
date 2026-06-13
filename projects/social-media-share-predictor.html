@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Share Predictor — Iraj Nayebkhil</title>
+  <meta name="description" content="A machine-learning pipeline that predicts how many shares a news article will get — from exploratory analysis and outlier treatment through feature engineering, comparing Linear Regression, Random Forest, and a configurable neural network under 10-fold cross-validation.">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="project.css">
+  <style>
+    /* page-scoped: clean results + figure presentation */
+    .metric-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.4rem 0 0.2rem; }
+    .metric {
+      border: 1px solid var(--border); border-radius: 10px; background: var(--bg-2);
+      padding: 0.55rem 0.9rem; min-width: 90px;
+    }
+    .metric .m-k { font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+    .metric .m-v { font-family: var(--mono); font-size: 0.95rem; color: var(--ink); margin-top: 0.15rem; }
+    .metric.best { border-color: var(--purple); }
+    .cmp-table { width: 100%; border-collapse: collapse; margin-top: 0.4rem; font-size: 0.82rem; }
+    .cmp-table th, .cmp-table td {
+      text-align: right; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+    }
+    .cmp-table th { color: var(--muted); font-weight: 400; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .cmp-table td:first-child, .cmp-table th:first-child { text-align: left; color: var(--muted); }
+    .cmp-table tr.win td { color: var(--purple-hi); }
+    .figure-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-top: 1.4rem; }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Iraj Nayebkhil<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#research">Research</a></li>
+      <li><a href="../index.html#work">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#certifications">Certs</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+  <header class="project-hero wrap">
+    <a href="../index.html#work" class="project-back">← Back to Projects</a>
+    <p class="project-kicker">Python · Machine Learning · Cross-Validation</p>
+    <h1 class="project-title">Social Media<br>Share Predictor</h1>
+    <div class="project-meta">
+      <span>May 2023</span>
+      <span>·</span>
+      <span>AI &amp; Machine Learning Project · LUISS Guido Carli</span>
+    </div>
+    <p class="project-desc">
+      A machine-learning tool that predicts how many shares an article will get, built for a company's communications team. The pipeline runs from exploratory data analysis through outlier handling and feature engineering, then pits Linear Regression, Random Forest, and a configurable artificial neural network against each other under 10-fold cross-validation.
+    </p>
+    <div class="project-tags">
+      <span class="tag">Python</span>
+      <span class="tag">Machine Learning</span>
+      <span class="tag">scikit-learn</span>
+      <span class="tag">Keras / ANN</span>
+    </div>
+  </header>
+
+  <!-- ===================== AT A GLANCE ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">At a Glance</div>
+    <h2 class="ps-title">Three models, one bake-off</h2>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="ic-label">Models</div>
+        <div class="ic-value">LR · RF · ANN</div>
+        <div class="ic-desc">Linear Regression, Random Forest, and a configurable neural network compared head-to-head.</div>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Validation</div>
+        <div class="ic-value">10-Fold CV</div>
+        <div class="ic-desc">GridSearchCV and RandomizedSearchCV tune hyperparameters under 10-fold cross-validation.</div>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Result</div>
+        <div class="ic-value">MAE ≈ 283</div>
+        <div class="ic-desc">Best ANN on the held-out test set, with feature selection trimming inputs from 57 to 16.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DOWNLOADS ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Code &amp; Data</div>
+    <h2 class="ps-title">Take it home</h2>
+    <p class="ps-body">The full project — notebook, Conda environment file, and dataset — is packaged for download. A curated walkthrough of the pipeline follows below.</p>
+    <div class="repo-actions">
+      <a class="btn btn-primary" href="../files/Projects/01_Data-ML/Social-Media-Share-Predictor/Social-Media-Share-Predictor.zip" download>Download Project (ZIP)</a>
+      <a class="btn" href="../files/Projects/01_Data-ML/Social-Media-Share-Predictor/main.ipynb" download>Notebook Only (IPYNB)</a>
+    </div>
+  </section>
+
+  <!-- ===================== ANALYSIS ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">The Pipeline</div>
+    <h2 class="ps-title">From raw data to a tuned model</h2>
+    <p class="ps-body">The brief: help a company's social media department predict the number of shares an article will get from its content and publication time. The dataset has <strong>39,644 articles</strong> across <strong>58 features</strong>. Each step below shows the key code; expand a section to read it.</p>
+    <div class="nb">
+
+      <!-- EDA -->
+      <details class="nb-sec" open>
+        <summary>1 — Exploratory data analysis</summary>
+        <div class="nb-sec-body">
+          <div class="nb-md">
+            <p>We start by inspecting the columns, correlations, and the shape of the data, then look closely at the target variable — <code>shares</code>. Around 90% of articles have fewer than 10K shares, leaving a heavy right tail: only 818 of ~40,000 articles exceed 20K shares.</p>
+          </div>
+          <pre class="nb-code">sms_df = pd.read_csv("social_media_shares.csv")
+
+sms_df.shape                       # (39644, 59)
+sms_df.shares.describe()           # mean ≈ 3395, max = 843300
+sms_df.corr().shares.sort_values() # what drives shares, up and down
+
+# Distribution of the target
+plt.hist(sms_df.shares, range=(-100, 80000), rwidth=0.8)
+plt.xlabel("number of shares"); plt.ylabel("instances")</pre>
+          <div class="figure-frame">
+            <img src="assets/social-media-share-predictor/fig-001.png" alt="Histogram of article shares showing the vast majority of articles fall under 10,000 shares with a long right tail" loading="lazy">
+          </div>
+          <p class="figure-caption">Distribution of shares — dominated by low-share articles with a long, sparse tail of viral outliers.</p>
+          <div class="nb-md">
+            <p>Self-referencing shares, keywords, images, and links show the strongest positive correlation with shares, while negative polarity and entertainment/technology topics correlate slightly negatively.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- OUTLIERS -->
+      <details class="nb-sec">
+        <summary>2 — Outlier treatment</summary>
+        <div class="nb-sec-body">
+          <div class="nb-md">
+            <p>Categorical (binary) variables can't have outliers, so we identify and set them aside first. The remaining variables are treated by distribution shape: near-Gaussian variables (skew between −0.2 and 0.2) have extreme values beyond the 0.5%/99.5% quantiles replaced with the median; long-tailed variables are trimmed manually; and a handful of heavy-tailed variables are log-transformed.</p>
+          </div>
+          <pre class="nb-code"># Identify binary / categorical columns (only take values {0, 1})
+categ = [i for i in sms_df.columns if set(sms_df[i].values) == {0, 1}]
+
+# Bell-shaped variables: clip extremes to the median
+gauss = [i for i in cols[:-1] if i not in categ and -0.2 <= sms_df[i].skew() <= 0.2]
+for i in gauss:
+    Q1, Q2, Q3 = sms_df[i].quantile([0.005, 0.5, 0.995])
+    sms_df[i] = np.where((sms_df[i] >= Q3) | (sms_df[i] <= Q1), Q2, sms_df[i])
+
+# Heavy-tailed variables: log-transform to tame the tail
+for i in ["kw_min_min", "kw_max_max", "kw_min_avg", "LDA_00", "LDA_01",
+          "LDA_02", "LDA_03", "LDA_04", "min_positive_polarity",
+          "max_positive_polarity", "title_subjectivity",
+          "abs_title_subjectivity", "abs_title_sentiment_polarity"]:
+    sms_df[i] = sms_df[i].map(lambda x: np.log(x) if x > 0 else 0)
+
+# Long-tailed variables: trim manually by inspecting each distribution
+sms_df = sms_df[sms_df.tokens_content < 2000]
+sms_df = sms_df[(sms_df.token_length > 3) & (sms_df.token_length < 6)]
+sms_df = sms_df[sms_df.hrefs < 40]
+# … (per-variable thresholds for the remaining features)
+
+# Focus the model on the predictable range of the target
+sms_v2 = sms_df[sms_df.shares < 2000]</pre>
+          <div class="nb-md">
+            <p>The model is scoped to articles with up to 2,000 shares — the dense, learnable part of the distribution — since the rare viral outliers are too sparse to model reliably with this dataset.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- SCALING -->
+      <details class="nb-sec">
+        <summary>3 — Scaling &amp; train / validation / test split</summary>
+        <div class="nb-sec-body">
+          <div class="nb-md">
+            <p>With no categorical encoding needed, the independent variables are min-max scaled. The target is left unscaled so that errors stay directly interpretable in "shares". The data is split into training, validation, and test sets.</p>
+          </div>
+          <pre class="nb-code">from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+
+X = sms_v2.iloc[:, :-1].values
+y = sms_v2.iloc[:, -1].values
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=7)
+
+scaler = MinMaxScaler()
+X_train = scaler.fit_transform(X_train)
+X_test  = scaler.transform(X_test)
+
+# Carve a validation set out of the training set
+X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=1)</pre>
+        </div>
+      </details>
+
+      <!-- LINEAR REGRESSION -->
+      <details class="nb-sec">
+        <summary>4 — Baseline: Multivariable Linear Regression</summary>
+        <div class="nb-sec-body">
+          <div class="nb-md">
+            <p>A linear regression sets the baseline. We score every model on Mean Absolute Error (MAE) — easy to interpret since the target is unscaled — alongside MSE and R².</p>
+          </div>
+          <pre class="nb-code">from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+mult_reg = LinearRegression().fit(X_train, y_train)
+y_pred_mr = mult_reg.predict(X_val)
+
+mae_mr = mean_absolute_error(y_val, y_pred_mr)
+mse_mr = mean_squared_error(y_val, y_pred_mr)
+r2_mr  = r2_score(y_val, y_pred_mr)</pre>
+          <div class="metric-row">
+            <div class="metric"><div class="m-k">MAE</div><div class="m-v">292.18</div></div>
+            <div class="metric"><div class="m-k">MSE</div><div class="m-v">133,854</div></div>
+            <div class="metric"><div class="m-k">R²</div><div class="m-v">0.127</div></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- RANDOM FOREST -->
+      <details class="nb-sec">
+        <summary>5 — Random Forest + GridSearchCV</summary>
+        <div class="nb-sec-body">
+          <div class="nb-md">
+            <p>After a default-parameter baseline, hyperparameters are tuned with a 10-fold grid search over the number of trees, depth, and feature sampling.</p>
+          </div>
+          <pre class="nb-code">from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {'n_estimators': [100, 250, 500],
+              'max_depth':    [3, 5, 7],
+              'max_features': ['auto', 'sqrt', 'log2']}
+
+grid_search = GridSearchCV(RandomForestRegressor(), param_grid,
+                           cv=10, scoring="neg_mean_absolute_error")
+grid_search.fit(X_train, y_train)
+grid_search.best_params_   # n_estimators=250, max_depth=7, max_features='auto'
+
+rf_reg = RandomForestRegressor(n_estimators=250, max_depth=7, max_features='auto')
+rf_reg.fit(X_train, y_train)
+y_pred_rf = rf_reg.predict(X_val)</pre>
+          <div class="metric-row">
+            <div class="metric"><div class="m-k">MAE</div><div class="m-v">296.10</div></div>
+            <div class="metric"><div class="m-k">MSE</div><div class="m-v">134,266</div></div>
+            <div class="metric"><div class="m-k">R²</div><div class="m-v">0.125</div></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ANN -->
+      <details class="nb-sec">
+        <summary>6 — Configurable Artificial Neural Network</summary>
+        <div class="nb-sec-body">
+          <div class="nb-md">
+            <p>The ANN is built so that the number of hidden layers, the kernel initializer, the activation, dropout, and L1 regularization are all hyperparameters. A flag also switches between a <em>constant</em> and a <em>decreasing</em> number of neurons per hidden layer, since one may outperform the other depending on the problem.</p>
+          </div>
+          <div class="figure-row">
+            <div>
+              <div class="figure-frame"><img src="assets/social-media-share-predictor/ann-constant.png" alt="Diagram of a neural network with a constant number of neurons across the hidden layers" loading="lazy"></div>
+              <p class="figure-caption">Constant neurons per hidden layer.</p>
+            </div>
+            <div>
+              <div class="figure-frame"><img src="assets/social-media-share-predictor/ann-decreasing.png" alt="Diagram of a neural network with a decreasing number of neurons across the hidden layers" loading="lazy"></div>
+              <p class="figure-caption">Decreasing neurons per hidden layer.</p>
+            </div>
+          </div>
+          <pre class="nb-code">from keras.models import Sequential
+from keras.layers import Dense, Input, Dropout
+from tensorflow.keras import regularizers
+
+def build_model(input_size=X_train.shape[1], num_hidden_layers=1,
+                constant_num_neurons=False, initializer='uniform',
+                activation_func='relu', p_dropout=0, L1=0):
+    model = Sequential()
+    model.add(Input((input_size,)))
+    for i in range(num_hidden_layers):
+        neurons = (int(input_size / 2) if constant_num_neurons
+                   else int(((num_hidden_layers - i) * input_size) / (2 * num_hidden_layers)))
+        model.add(Dense(neurons, kernel_initializer=initializer,
+                        activation=activation_func,
+                        kernel_regularizer=regularizers.L1(l1=L1)))
+        model.add(Dropout(p_dropout))
+    model.add(Dense(1, kernel_initializer=initializer, activation=activation_func))
+    model.compile(loss='mean_absolute_error', optimizer='adam')
+    return model</pre>
+          <div class="nb-md">
+            <p>L1 helps with feature selection by shrinking weights; dropout makes the model more robust. Hyperparameters are searched with a 10-fold randomized search.</p>
+          </div>
+          <pre class="nb-code">from sklearn.model_selection import RandomizedSearchCV
+from tensorflow.keras.wrappers.scikit_learn import KerasRegressor
+
+param_grid = {'num_hidden_layers':    range(2, 6),
+              'constant_num_neurons': [True, False],
+              'activation_func':      ['relu'],
+              'initializer':          ['uniform'],
+              'p_dropout':            [0, 0.2, 0.5],
+              'L1':                   [0, 1, 10, 100]}
+
+random_search = RandomizedSearchCV(KerasRegressor(build_model, verbose=0),
+                                   param_grid, n_iter=72, cv=10,
+                                   scoring='neg_mean_absolute_error')
+random_search.fit(X_train, y_train, batch_size=32, epochs=100)</pre>
+          <div class="metric-row">
+            <div class="metric"><div class="m-k">MAE</div><div class="m-v">290.39</div></div>
+            <div class="metric"><div class="m-k">MSE</div><div class="m-v">135,962</div></div>
+            <div class="metric"><div class="m-k">R²</div><div class="m-v">0.114</div></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- MODEL SELECTION -->
+      <details class="nb-sec">
+        <summary>7 — Choosing the best model</summary>
+        <div class="nb-sec-body">
+          <div class="nb-md">
+            <p>Side by side on the validation set, the three models are close. Since MAE was the metric used throughout training and cross-validation, the ANN is selected — it has the lowest MAE, and the L1 + dropout regularization make it the most robust on unseen data.</p>
+          </div>
+          <table class="cmp-table">
+            <thead>
+              <tr><th>Metric</th><th>Linear Reg.</th><th>Random Forest</th><th>ANN</th></tr>
+            </thead>
+            <tbody>
+              <tr class="win"><td>MAE</td><td>292.18</td><td>296.10</td><td>290.39</td></tr>
+              <tr><td>MSE</td><td>133,853</td><td>134,266</td><td>135,962</td></tr>
+              <tr><td>R²</td><td>0.127</td><td>0.125</td><td>0.114</td></tr>
+            </tbody>
+          </table>
+          <p class="figure-caption">Validation-set comparison. The ANN wins on MAE — the metric the models were trained and tuned against.</p>
+        </div>
+      </details>
+
+      <!-- TEST PERFORMANCE -->
+      <details class="nb-sec">
+        <summary>8 — Performance on the held-out test set</summary>
+        <div class="nb-sec-body">
+          <div class="nb-md">
+            <p>The chosen ANN is retrained and evaluated on the test set it has never seen.</p>
+          </div>
+          <pre class="nb-code">regressor = ann_reg
+regressor.compile(optimizer='adam', loss="MeanAbsoluteError")
+regressor.fit(X_train, y_train, batch_size=32, epochs=100)
+
+y_pred = regressor.predict(X_test)
+mae = mean_absolute_error(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
+r2  = r2_score(y_test, y_pred)</pre>
+          <div class="metric-row">
+            <div class="metric best"><div class="m-k">Test MAE</div><div class="m-v">282.67</div></div>
+            <div class="metric"><div class="m-k">Test MSE</div><div class="m-v">129,036</div></div>
+            <div class="metric"><div class="m-k">Test R²</div><div class="m-v">0.124</div></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- FEATURE SELECTION -->
+      <details class="nb-sec">
+        <summary>9 — Feature selection: 57 → 16 inputs</summary>
+        <div class="nb-sec-body">
+          <div class="nb-md">
+            <p>Finally, three signals — correlation with the target, LASSO coefficients, and Random Forest feature importances, cross-checked with mutual information — are combined to shrink the input set. Performance stays essentially the same while the feature count drops from 57 to 16, making the model faster, cheaper to run, and easier to collect data for.</p>
+          </div>
+          <pre class="nb-code">from sklearn.linear_model import Lasso
+from sklearn.feature_selection import mutual_info_regression
+
+# LASSO coefficients (positive-constrained)
+lasso = Lasso(alpha=5, positive=True).fit(X_test, y_test)
+
+# Random Forest importances
+feature_imp = pd.Series(rf_reg.feature_importances_, index=feature_list).sort_values()
+
+# Mutual information with the target
+mutual_info = pd.Series(mutual_info_regression(X_train, y_train), index=bst[:-1])
+mutual_info.sort_values(ascending=False)
+
+# Retrain the ANN on the reduced 16-feature set
+reg = build_model(input_size=len(attributes_ind), num_hidden_layers=3,
+                  constant_num_neurons=True, activation_func='relu')
+reg.compile(optimizer='adam', loss="MeanAbsoluteError")
+reg.fit(X_train[:, attributes_ind], y_train, batch_size=32, epochs=100)</pre>
+          <table class="cmp-table">
+            <thead>
+              <tr><th>Model</th><th>MAE</th><th>MSE</th><th>R²</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Full feature set</td><td>284.08</td><td>127,395</td><td>0.135</td></tr>
+              <tr><td>16-feature set</td><td>288.18</td><td>129,654</td><td>0.120</td></tr>
+            </tbody>
+          </table>
+          <p class="figure-caption">The smaller model trades a sliver of accuracy for a large gain in speed and data-collection cost.</p>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ===================== TAKEAWAYS ===================== -->
+  <section class="project-section wrap">
+    <div class="ps-label">Results &amp; Takeaways</div>
+    <h2 class="ps-title">What the model can — and can't — do</h2>
+    <p class="ps-body">
+      The pipeline produces a usable predictor for articles in the 0–2,000 share range, with the 16-feature ANN as the recommended operating point: nearly the same accuracy as the full model, far cheaper to run and to gather data for. The right choice ultimately depends on the communications team's needs — precision versus speed and data cost.
+    </p>
+    <p class="ps-body">
+      The honest limitation is the low R² (~0.12 across all models): the supplied features don't fully explain the variation in shares. Share counts are driven heavily by virality and timing effects this dataset doesn't capture. A more robust solution would need a wider range of training data and a deeper study of which features actually influence the outcome.
+    </p>
+  </section>
+
+  </main>
+
+  <footer>
+    <span>© 2026 Iraj Nayebkhil</span>
+    <span>Geneva · Switzerland</span>
+    <span><a href="../index.html#work" style="color:var(--muted);text-decoration:none;">← All Projects</a></span>
+  </footer>
+
+</body>
+</html>
