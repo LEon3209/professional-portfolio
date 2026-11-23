@@ -1,155 +1,125 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.getElementById('card-grid');
-  const filterBar = document.getElementById('filter-bar');
-  const CATEGORIES = ['Data & Analytics', 'Thesis', 'Strategy & Business', 'Finance', 'Media & Communication'];
-  const FEATURED_TITLES = [
-    'Amazon Prime Video Dashboard',
-    'IBM HR Analytics Dashboard',
-    'Engaging Key Stakeholders for School Connectivity in Ethiopia',
-    'Portfolio Optimization & Financial Analysis',
-    'Genre-Based Music Recommendation System',
-    'UNIGE Instagram Takeover',
-  ];
-  let projects = [];
-  let activeCategory = null; // null = featured, 'all' = all, string = category
+  /* ---------- selected work ---------- */
+  const rows = document.getElementById('work-rows');
+  const filters = document.getElementById('filters');
+  const count = document.getElementById('work-count');
+
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+
+  let showFilter = () => {};
 
   function init(data) {
-    projects = data.filter(p => !p.hidden).sort((a, b) => new Date(b.date) - new Date(a.date));
-    renderFilters();
-    renderCards();
-    observeReveals();
+    const visible = data.filter((p) => !p.hidden);
+    // rows are newest first; category order follows projects.json
+    const projects = [...visible].sort((a, b) => b.date.localeCompare(a.date));
+    const featured = projects.filter((p) => p.featured);
+    const views = [
+      ...(featured.length ? [['Featured', featured]] : []),
+      ['All', projects],
+      ...[...new Set(visible.map((p) => p.category))].map((c) => [c, projects.filter((p) => p.category === c)]),
+    ];
+
+    const buttons = views.map(([label, list], i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = label;
+      btn.setAttribute('aria-pressed', String(i === 0));
+      btn.addEventListener('click', () => showFilter(label));
+      filters.appendChild(btn);
+      return [label, btn, list];
+    });
+
+    showFilter = (label) => {
+      buttons.forEach(([l, btn, list]) => {
+        btn.setAttribute('aria-pressed', String(l === label));
+        if (l === label) render(list, l === 'Featured' ? projects.length : 0);
+      });
+    };
+
+    showFilter(views[0][0]);
   }
 
-  if (grid) {
+  function render(list, total) {
+    count.textContent = `(${String(list.length).padStart(2, '0')})`;
+    if (!list.length) {
+      rows.innerHTML = '<p class="work-empty muted">No projects in this category yet.</p>';
+      return;
+    }
+    rows.innerHTML = list.map((p) => {
+      const href = esc(p.page);
+      const title = esc(p.title);
+      const tags = (p.tags || []).map((t) => `<span>${esc(t)}</span>`).join('');
+      return `
+        <article class="work-row">
+          <div>
+            <div class="work-row__meta label"><span>${esc(p.category)}</span><span>${esc(p.date.slice(0, 4))}</span></div>
+            <h3>${title}</h3>
+            <p class="work-row__desc">${esc(p.description)}</p>
+            <a class="work-row__more" href="${href}">Read more<span class="sr-only"> about ${title}</span></a>
+          </div>
+          <a class="plate" href="${href}" tabindex="-1" aria-hidden="true">
+            <img src="${esc(p.preview || p.image)}" alt="" loading="lazy" decoding="async">
+            <span class="plate__tags">${tags}</span>
+          </a>
+        </article>`;
+    }).join('') + (total ? `
+      <div class="work-all">
+        <button type="button" class="btn">See all ${total} projects <span aria-hidden="true">→</span></button>
+      </div>` : '');
+
+    const all = rows.querySelector('.work-all button');
+    if (all) {
+      all.addEventListener('click', () => {
+        showFilter('All');
+        filters.querySelector('button[aria-pressed="true"]').focus();
+      });
+    }
+  }
+
+  if (rows && filters && count) {
     if (Array.isArray(window.PROJECTS)) {
       init(window.PROJECTS);
     } else {
       fetch('projects.json')
-        .then(res => res.json())
+        .then((res) => res.json())
         .then(init)
-        .catch(() => {
-          grid.innerHTML = '<div class="card"><p>Project index unavailable.</p></div>';
-        });
+        .catch(() => { rows.innerHTML = '<p class="work-empty muted">Project list unavailable.</p>'; });
     }
   }
 
-  function renderFilters() {
-    filterBar.innerHTML = '';
-    addFilterBtn('Featured', null, true);
-    CATEGORIES.forEach(cat => addFilterBtn(cat, cat, false));
-    addFilterBtn('All', 'all', false);
-  }
+  /* ---------- nav: shrink on scroll + current section ---------- */
+  const nav = document.querySelector('.site-nav');
+  if (!nav) return;
 
-  function addFilterBtn(label, cat, isActive) {
-    const btn = document.createElement('button');
-    btn.className = 'filter-btn' + (isActive ? ' active' : '');
-    btn.textContent = label;
-    btn.addEventListener('click', () => {
-      activeCategory = cat;
-      filterBar.querySelectorAll('.filter-btn').forEach(b => {
-        b.classList.toggle('active', b.textContent === label);
-      });
-      renderCards();
+  const links = [...nav.querySelectorAll('.site-nav__links a')];
+  const sections = links
+    .map((a) => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  function update() {
+    nav.classList.toggle('is-mini', window.scrollY > 80);
+
+    let current = null;
+    sections.forEach((s) => { if (s.getBoundingClientRect().top < 200) current = s.id; });
+    // the last section can be too short to reach the line: treat page bottom as "contact"
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+      current = sections[sections.length - 1].id;
+    }
+    links.forEach((a) => {
+      const on = a.getAttribute('href') === `#${current}`;
+      a.classList.toggle('is-active', on);
+      if (on) a.setAttribute('aria-current', 'location');
+      else a.removeAttribute('aria-current');
     });
-    filterBar.appendChild(btn);
   }
 
-  function slugify(t) {
-    return t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  }
-
-  function renderCard(project) {
-    const tagsHTML = project.tags.map(t => `<span class="tag">${t}</span>`).join('');
-    const date = new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-    const cover = project.image || `projects/covers/${slugify(project.title)}.svg`;
-
-    let href = '#';
-    let cta = 'View →';
-    let attrs = '';
-    if (project.page) {
-      href = project.page;
-      cta = 'View Project →';
-    } else if (project.file) {
-      const isDoc = /\.(zip|xlsx|pptx|ipynb)$/i.test(project.file);
-      href = encodeURI(project.file);
-      cta = isDoc ? 'Download ↓' : 'Open ↗';
-      attrs = isDoc ? 'download' : 'target="_blank" rel="noopener"';
-    } else if (project.url) {
-      href = project.url;
-      cta = 'View →';
-      attrs = 'target="_blank" rel="noopener"';
-    }
-
-    return `
-      <a class="card" href="${href}" ${attrs}>
-        <div class="card-cover">
-          <img src="${cover}" alt="" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3>${project.title}</h3>
-          <p>${project.description}</p>
-          <div class="card-tags">${tagsHTML}</div>
-          <div class="card-footer">
-            <span class="card-date">${date}</span>
-            <span class="card-cta">${cta}</span>
-          </div>
-        </div>
-      </a>`;
-  }
-
-  function renderCards() {
-    if (activeCategory === 'all') {
-      // Show all, grouped by category with headers
-      grid.innerHTML = CATEGORIES.map(cat => {
-        const catProjects = projects.filter(p => p.category === cat);
-        if (!catProjects.length) return '';
-        return `
-          <div class="cat-header">${cat}</div>
-          ${catProjects.map(renderCard).join('')}`;
-      }).join('');
-    } else if (activeCategory) {
-      const filtered = projects.filter(p => p.category === activeCategory);
-      grid.innerHTML = filtered.map(renderCard).join('');
-    } else {
-      // Featured: show projects in the specified order
-      const featured = FEATURED_TITLES
-        .map(title => projects.find(p => p.title === title))
-        .filter(Boolean);
-      grid.innerHTML = featured.map(renderCard).join('');
-    }
-    observeReveals();
-  }
-
-  /* ---------- reveal-on-scroll ---------- */
-  function observeReveals() {
-    const els = document.querySelectorAll('.reveal:not(.in-view)');
-    if (!('IntersectionObserver' in window)) {
-      els.forEach(el => el.classList.add('in-view'));
-      return;
-    }
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
-      });
-      // a fixed ratio threshold never fires for elements taller than the
-      // viewport (e.g. the project grid), so trigger on any intersection
-    }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
-    els.forEach(el => io.observe(el));
-  }
-  observeReveals();
-
-  /* ---------- scroll-spy nav ---------- */
-  const sections = document.querySelectorAll('section[id], header[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  if (sections.length && 'IntersectionObserver' in window) {
-    const spy = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const id = e.target.id;
-          navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
-        }
-      });
-    }, { rootMargin: '-45% 0px -50% 0px' });
-    sections.forEach(s => spy.observe(s));
-  }
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { update(); ticking = false; });
+  }, { passive: true });
+  update();
 });

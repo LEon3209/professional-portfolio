@@ -23,7 +23,8 @@ window.PROJECTS = [
     "category": "Data & Analytics",
     "date": "2025-01-01",
     "page": "projects/corporate-governance-hypothesis-testing.html",
-    "image": "projects/covers/previews/corporate-governance-hypothesis-testing.png"
+    "image": "projects/covers/previews/corporate-governance-hypothesis-testing.png",
+    "preview": "projects/covers/plates/corporate-governance-hypothesis-testing.webp"
   },
   {
     "title": "Amazon Prime Video Dashboard",
@@ -35,7 +36,8 @@ window.PROJECTS = [
     "category": "Data & Analytics",
     "date": "2026-01-01",
     "page": "projects/amazon-prime-dashboard.html",
-    "image": "projects/covers/previews/amazon-prime-video-dashboard.png"
+    "image": "projects/covers/previews/amazon-prime-video-dashboard.png",
+    "featured": true
   },
   {
     "title": "IBM HR Analytics Dashboard",
@@ -83,7 +85,8 @@ window.PROJECTS = [
     "category": "Data & Analytics",
     "date": "2023-05-01",
     "page": "projects/social-media-share-predictor.html",
-    "image": "projects/covers/previews/social-media-share-predictor.png"
+    "image": "projects/covers/previews/social-media-share-predictor.png",
+    "preview": "projects/covers/plates/social-media-share-predictor.webp"
   },
   {
     "title": "Genre-Based Music Recommendation System",
@@ -95,7 +98,9 @@ window.PROJECTS = [
     "category": "Thesis",
     "date": "2024-07-01",
     "page": "projects/genre-based-music-recommendation-system.html",
-    "image": "projects/covers/previews/genre-based-music-recommendation-system.png"
+    "image": "projects/covers/previews/genre-based-music-recommendation-system.png",
+    "preview": "projects/covers/plates/genre-based-music-recommendation-system.webp",
+    "featured": true
   },
   {
     "title": "IBM Strategic Growth Analysis",
@@ -107,7 +112,8 @@ window.PROJECTS = [
     "category": "Strategy & Business",
     "date": "2025-12-01",
     "page": "projects/ibm-strategic-growth-analysis.html",
-    "image": "projects/covers/previews/ibm-strategic-growth-analysis.png"
+    "image": "projects/covers/previews/ibm-strategic-growth-analysis.png",
+    "featured": true
   },
   {
     "title": "Entrepreneurship Lab — Azure Cell Therapies",
@@ -132,7 +138,9 @@ window.PROJECTS = [
     "category": "Strategy & Business",
     "date": "2025-11-01",
     "page": "projects/school-connectivity-in-ethiopia-giga.html",
-    "image": "projects/covers/previews/school-connectivity-in-ethiopia-giga.png"
+    "image": "projects/covers/previews/school-connectivity-in-ethiopia-giga.png",
+    "preview": "projects/covers/plates/school-connectivity-in-ethiopia-giga.webp",
+    "featured": true
   },
   {
     "title": "Safely — Digital Economy & Innovation",
@@ -195,7 +203,8 @@ window.PROJECTS = [
     "category": "Finance",
     "date": "2024-06-01",
     "page": "projects/portfolio-optimization-financial-analysis.html",
-    "image": "projects/covers/previews/portfolio-optimization-financial-analysis.png"
+    "image": "projects/covers/previews/portfolio-optimization-financial-analysis.png",
+    "featured": true
   },
   {
     "title": "JP Morgan Market Memorandum",
@@ -207,7 +216,8 @@ window.PROJECTS = [
     "category": "Finance",
     "date": "2025-11-01",
     "page": "projects/jp-morgan-market-memorandum.html",
-    "image": "projects/covers/previews/jp-morgan-market-memorandum.png"
+    "image": "projects/covers/previews/jp-morgan-market-memorandum.png",
+    "preview": "projects/covers/plates/jp-morgan-market-memorandum.webp"
   },
   {
     "title": "UNIGE Instagram Takeover",
@@ -219,6 +229,7 @@ window.PROJECTS = [
     "category": "Media & Communication",
     "date": "2026-06-03",
     "page": "projects/unige-instagram-takeover.html",
-    "image": "projects/covers/previews/unige-instagram-takeover.png"
+    "image": "projects/covers/previews/unige-instagram-takeover.png",
+    "preview": "projects/covers/plates/unige-instagram-takeover.webp"
   }
 ];

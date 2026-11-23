@@ -8,338 +8,256 @@
   <meta property="og:title" content="Iraj Nayebkhil - Professional Portfolio">
   <meta property="og:description" content="Professional Portfolio of Iraj Nayebkhil — MSc student at the University of Geneva working across data, machine learning, business strategy, and the social dimensions of technology.">
   <meta property="og:url" content="https://leon3209.github.io/professional-portfolio/">
+  <meta name="theme-color" content="#F3F8FD">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home">
 
   <a href="#main" class="skip-link">Skip to content</a>
 
-  <nav>
-    <a href="#top" class="nav-logo">Iraj Nayebkhil<span class="dot">.</span></a>
-    <ul class="nav-links">
-      <li><a href="#research">Experience</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#work">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#certifications">Certs</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="#top" class="site-nav__brand" aria-label="Iraj Nayebkhil, back to top">IN</a>
+    <div class="site-nav__links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="cv.pdf" class="site-nav__cv" download>CV <span aria-hidden="true">↓</span></a>
+    <span class="site-nav__mark" aria-hidden="true">IN</span>
   </nav>
 
   <main id="main">
 
-  <!-- ===================== HERO ===================== -->
-  <header id="top" class="hero wrap">
-    <div class="hero-grid">
-      <div class="hero-main reveal">
-        <p class="hero-kicker">Data · Management · Technology &amp; Society</p>
-        <h1>Iraj<br>Nayebkhil</h1>
-        <p class="hero-sub">I ask the questions first,<br>then find the tools to answer them.</p>
-        <p class="hero-desc">
-          I'm a Master's student at the University of Geneva,
-          with a focus on how data and technology drive real organisational impact.
-          My foundation is in management, backed by hands-on technical skills in data analysis,
-          dashboards, and project coordination — which means I can contribute across both
-          the analytical and strategic sides of a team.
-        </p>
-        <div class="hero-actions">
-          <a href="#work" class="btn btn-primary">View Projects</a>
-          <a href="cv.pdf" class="btn" download>Download CV</a>
+    <!-- ===================== HERO ===================== -->
+    <header class="hero" id="top">
+      <h1 class="hero__name">Iraj Nayebkhil</h1>
+      <div class="hero__row">
+        <div>
+          <p class="hero__statement">
+            Master's student at the University of Geneva working across data, management and the social side of technology.
+            <span>I ask the questions first, then find the tools to answer them.</span>
+          </p>
+          <a class="btn btn-primary" href="#work">See the work</a>
         </div>
+        <img class="hero__pic" src="profile.jpg" alt="Portrait of Iraj Nayebkhil" width="1024" height="1024">
+      </div>
+    </header>
+
+    <!-- ===================== WORK ===================== -->
+    <section class="sec" id="work" aria-labelledby="work-title">
+      <div class="sec__bar">
+        <h2 class="label" id="work-title">Selected work <span class="muted" id="work-count"></span></h2>
+        <div class="filters" id="filters" role="group" aria-label="Filter projects by category"></div>
+      </div>
+      <div id="work-rows" aria-live="polite"></div>
+      <noscript><p class="muted">Turn on JavaScript to see the project list.</p></noscript>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section class="sec about" id="about" aria-labelledby="about-title">
+      <div class="sec__bar">
+        <h2 class="label" id="about-title">About</h2>
+        <span class="label muted">Geneva, Switzerland</span>
       </div>
 
-      <aside class="hero-portrait reveal" aria-label="Profile photo">
-        <img src="profile.jpg" alt="Iraj Nayebkhil" class="portrait">
-      </aside>
-    </div>
-  </header>
-
-  <!-- ===================== EXPERIENCE ===================== -->
-  <section id="research" class="section wrap">
-    <h2 class="section-label reveal"><span class="sl-chip"><span class="idx">01</span> Experience</span></h2>
-    <div class="timeline">
-
-      <div class="t-entry reveal">
-        <div class="t-year">Apr 2026 — Present</div>
-        <h3 class="t-title">Digital Learning &amp; Project Coordination Intern<span class="t-kind">Work</span></h3>
-        <div class="t-org">Geneva Research Lab for Digital Impact (GRL)</div>
-        <p class="t-desc">
-          Leading end-to-end digital learning production — coordinating microlearning module delivery across scripting,
-          design, and launch stages in collaboration with UNICEF and Giga country teams. Managing project tracking tools
-          across the full production lifecycle, supporting scheduling and cross-team workflow with internal and external
-          partners. Contributing to monthly KPI reporting on production status, engagement metrics, and risks.
-        </p>
-      </div>
-
-      <div class="t-entry reveal">
-        <div class="t-year">Oct 2025 — Mar 2026</div>
-        <h3 class="t-title">Student Assistant, Research &amp; Digital Learning<span class="t-kind">Work</span></h3>
-        <div class="t-org">Geneva Research Lab for Digital Impact (GRL)</div>
-        <p class="t-desc">
-          Led end-to-end LMS procurement — evaluated 5 vendors across technical, compliance, and organisational
-          criteria and produced a scoring framework whose recommendation was adopted by the organisation.
-          Administered the selected LMS platform, built and structured courses, and integrated interactive content.
-          Conducted research and expert interviews; wrote and refined microlearning scripts for practitioners,
-          civil servants, and policymakers.
-        </p>
-      </div>
-
-      <div class="t-entry reveal">
-        <div class="t-year">2025</div>
-        <h3 class="t-title">Volunteer<span class="t-kind">Service</span></h3>
-        <div class="t-org">Cancer Support Switzerland</div>
-        <p class="t-desc">
-          Helped organise and coordinate the 25th-anniversary celebration — event logistics,
-          guest registration, and venue setup.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===================== EDUCATION ===================== -->
-  <section id="education" class="section wrap">
-    <h2 class="section-label reveal"><span class="sl-chip"><span class="idx">02</span> Education</span></h2>
-    <div class="timeline">
-
-      <div class="t-entry reveal">
-        <div class="t-year">2024 — Present</div>
-        <h3 class="t-title">MSc, Responsible Management</h3>
-        <div class="t-org">University of Geneva · Switzerland</div>
-        <p class="t-desc">
-          Graduate study in responsible management — strategy, governance, sustainability, and
-          how technology shapes organisations and society. Chose this deliberately after my
-          undergrad: I wanted to understand not just how to build things, but whether we should.
-        </p>
-      </div>
-
-      <div class="t-entry reveal">
-        <div class="t-year">2021 — 2024</div>
-        <h3 class="t-title">BSc, Management &amp; Computer Science</h3>
-        <div class="t-org">LUISS Guido Carli · Rome, Italy</div>
-        <p class="t-desc">
-          Interdisciplinary degree in management, economics, and computer science — where I
-          developed a taste for working across fields that don't usually talk to each other.
-          Finished with a thesis building a genre-based music recommendation system using the Spotify API.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===================== PROJECTS ===================== -->
-  <section id="work" class="section wrap">
-    <h2 class="section-label reveal"><span class="sl-chip"><span class="idx">03</span> Projects</span></h2>
-    <div class="filter-bar reveal" id="filter-bar"></div>
-    <div class="card-grid reveal" id="card-grid"></div>
-  </section>
-
-  <!-- ===================== SKILLS ===================== -->
-  <section id="skills" class="section wrap">
-    <h2 class="section-label reveal"><span class="sl-chip"><span class="idx">04</span> Skills &amp; Methods</span></h2>
-    <div class="skills-grid">
-
-      <div class="skill-block reveal">
-        <div class="s-head">Programming</div>
-        <ul>
-          <li>Python</li>
-          <li>R</li>
-          <li>SQL <span>/ MySQL</span></li>
-          <li>MATLAB</li>
-        </ul>
-      </div>
-
-      <div class="skill-block reveal">
-        <div class="s-head">Web &amp; Data Tools</div>
-        <ul>
-          <li>Django</li>
-          <li>HTML <span>/ CSS</span></li>
-          <li>Tableau</li>
-          <li>Excel <span>/ Spreadsheets</span></li>
-        </ul>
-      </div>
-
-      <div class="skill-block reveal">
-        <div class="s-head">ML &amp; Analytics</div>
-        <ul>
-          <li>Machine Learning</li>
-          <li>Statistical Analysis</li>
-          <li>EDA &amp; Feature Engineering</li>
-          <li>Data Visualization</li>
-        </ul>
-      </div>
-
-      <div class="skill-block reveal">
-        <div class="s-head">Research &amp; Methods</div>
-        <ul>
-          <li>Qualitative Research</li>
-          <li>Case Studies <span>/ SWOT</span></li>
-          <li>Financial Modeling</li>
-          <li>Materiality Assessment</li>
-        </ul>
-      </div>
-
-      <div class="skill-block reveal">
-        <div class="s-head">Project Management</div>
-        <ul>
-          <li>Asana</li>
-          <li>Stakeholder Management</li>
-          <li>Agile <span>/ Scrum basics</span></li>
-          <li>Reporting &amp; Documentation</li>
-        </ul>
-      </div>
-
-      <div class="skill-block reveal">
-        <div class="s-head">Languages</div>
-        <ul>
-          <li>English <span>C1</span></li>
-          <li>Persian <span>Native</span></li>
-          <li>Turkish <span>B2</span></li>
-          <li>French <span>A2–B1</span></li>
-          <li>Italian <span>A1</span></li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===================== CERTIFICATIONS ===================== -->
-  <section id="certifications" class="section wrap">
-    <h2 class="section-label reveal"><span class="sl-chip"><span class="idx">05</span> Certifications</span></h2>
-    <div class="cert-grid">
-
-      <a class="cert-card reveal" href="https://www.coursera.org/account/accomplishments/specialization/X6G5KAV9KP5Y" target="_blank" rel="noopener">
-        <div class="cert-preview no-img">
-          <img class="cert-thumb" src="certs/google-data-analytics.png" alt="Google Data Analytics certificate" loading="lazy"
-               onload="this.closest('.cert-preview').classList.remove('no-img')" onerror="this.remove()">
-          <div class="cert-fallback">
-            <span class="cert-seal">✦</span>
-            <span class="cert-fallback-issuer">Google</span>
-            <span class="cert-fallback-tag">Professional Certificate</span>
+      <!-- 01 Experience -->
+      <details class="acc" open>
+        <summary>
+          <span class="label muted">01</span>
+          <h3>Experience</h3>
+          <p>Digital learning, research and project coordination with UNICEF and Giga teams.</p>
+          <span class="acc__toggle" aria-hidden="true"></span>
+        </summary>
+        <div class="acc__body">
+          <div class="item">
+            <span class="label muted">Apr 2026 — Present</span>
+            <h4>Digital Learning &amp; Project Coordination Intern</h4>
+            <p class="item__org">Geneva Research Lab for Digital Impact (GRL)</p>
+            <p>
+              Leading end-to-end digital learning production — coordinating microlearning module delivery across scripting,
+              design, and launch stages in collaboration with UNICEF and Giga country teams. Managing project tracking tools
+              across the full production lifecycle, supporting scheduling and cross-team workflow with internal and external
+              partners. Contributing to monthly KPI reporting on production status, engagement metrics, and risks.
+            </p>
+          </div>
+          <div class="item">
+            <span class="label muted">Oct 2025 — Mar 2026</span>
+            <h4>Student Assistant, Research &amp; Digital Learning</h4>
+            <p class="item__org">Geneva Research Lab for Digital Impact (GRL)</p>
+            <p>
+              Led end-to-end LMS procurement — evaluated 5 vendors across technical, compliance, and organisational
+              criteria and produced a scoring framework whose recommendation was adopted by the organisation.
+              Administered the selected LMS platform, built and structured courses, and integrated interactive content.
+              Conducted research and expert interviews; wrote and refined microlearning scripts for practitioners,
+              civil servants, and policymakers.
+            </p>
+          </div>
+          <div class="item">
+            <span class="label muted">2025</span>
+            <h4>Volunteer</h4>
+            <p class="item__org">Cancer Support Switzerland</p>
+            <p>
+              Helped organise and coordinate the 25th-anniversary celebration — event logistics,
+              guest registration, and venue setup.
+            </p>
           </div>
         </div>
-        <div class="cert-body">
-          <div class="cert-issuer">Google · Coursera</div>
-          <div class="cert-name">Google Data Analytics</div>
-          <div class="cert-meta">Professional Certificate · Aug 2025</div>
-          <span class="cert-btn">View Certificate →</span>
-        </div>
-      </a>
+      </details>
 
-      <a class="cert-card reveal" href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/6FMC352XM6HU" target="_blank" rel="noopener">
-        <div class="cert-preview no-img">
-          <img class="cert-thumb" src="certs/google-project-management.png" alt="Google Project Management certificate" loading="lazy"
-               onload="this.closest('.cert-preview').classList.remove('no-img')" onerror="this.remove()">
-          <div class="cert-fallback">
-            <span class="cert-seal">✦</span>
-            <span class="cert-fallback-issuer">Google</span>
-            <span class="cert-fallback-tag">Professional Certificate</span>
+      <!-- 02 Education -->
+      <details class="acc">
+        <summary>
+          <span class="label muted">02</span>
+          <h3>Education</h3>
+          <p>Responsible Management in Geneva, Management and Computer Science in Rome.</p>
+          <span class="acc__toggle" aria-hidden="true"></span>
+        </summary>
+        <div class="acc__body">
+          <div class="item">
+            <span class="label muted">2024 — Present</span>
+            <h4>MSc, Responsible Management</h4>
+            <p class="item__org">University of Geneva · Switzerland</p>
+            <p>
+              Graduate study in responsible management — strategy, governance, sustainability, and
+              how technology shapes organisations and society. Chose this deliberately after my
+              undergrad: I wanted to understand not just how to build things, but whether we should.
+            </p>
+          </div>
+          <div class="item">
+            <span class="label muted">2021 — 2024</span>
+            <h4>BSc, Management &amp; Computer Science</h4>
+            <p class="item__org">LUISS Guido Carli · Rome, Italy</p>
+            <p>
+              Interdisciplinary degree in management, economics, and computer science — where I
+              developed a taste for working across fields that don't usually talk to each other.
+              Finished with a thesis building a genre-based music recommendation system using the Spotify API.
+            </p>
           </div>
         </div>
-        <div class="cert-body">
-          <div class="cert-issuer">Google · Coursera</div>
-          <div class="cert-name">Google Project Management</div>
-          <div class="cert-meta">Professional Certificate</div>
-          <span class="cert-btn">View Certificate →</span>
-        </div>
-      </a>
+      </details>
 
-      <a class="cert-card reveal" href="https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Accenture%20North%20America/hzmoNKtzvAzXsEqx8_Accenture%20North%20America_hjawJRHubfAEHTi2M_1706624607907_completion_certificate.pdf" target="_blank" rel="noopener">
-        <div class="cert-preview no-img">
-          <img class="cert-thumb" src="certs/accenture-data-analytics.png" alt="Accenture Data Analytics certificate" loading="lazy"
-               onload="this.closest('.cert-preview').classList.remove('no-img')" onerror="this.remove()">
-          <div class="cert-fallback">
-            <span class="cert-seal">✦</span>
-            <span class="cert-fallback-issuer">Accenture</span>
-            <span class="cert-fallback-tag">Virtual Experience</span>
+      <!-- 03 Skills -->
+      <details class="acc">
+        <summary>
+          <span class="label muted">03</span>
+          <h3>Skills</h3>
+          <p>Python, R and SQL for analysis; Tableau and Excel for dashboards; Asana for coordination.</p>
+          <span class="acc__toggle" aria-hidden="true"></span>
+        </summary>
+        <div class="acc__body">
+          <div class="item">
+            <h4 class="label muted">Programming</h4>
+            <ul>
+              <li>Python</li>
+              <li>R</li>
+              <li>SQL / MySQL</li>
+              <li>MATLAB</li>
+            </ul>
+            <h4 class="label muted">Web &amp; data tools</h4>
+            <ul>
+              <li>Django</li>
+              <li>HTML / CSS</li>
+              <li>Tableau</li>
+              <li>Excel / Spreadsheets</li>
+            </ul>
+          </div>
+          <div class="item">
+            <h4 class="label muted">ML &amp; analytics</h4>
+            <ul>
+              <li>Machine Learning</li>
+              <li>Statistical Analysis</li>
+              <li>EDA &amp; Feature Engineering</li>
+              <li>Data Visualization</li>
+            </ul>
+            <h4 class="label muted">Research &amp; methods</h4>
+            <ul>
+              <li>Qualitative Research</li>
+              <li>Case Studies / SWOT</li>
+              <li>Financial Modeling</li>
+              <li>Materiality Assessment</li>
+            </ul>
+          </div>
+          <div class="item">
+            <h4 class="label muted">Project management</h4>
+            <ul>
+              <li>Asana</li>
+              <li>Stakeholder Management</li>
+              <li>Agile / Scrum basics</li>
+              <li>Reporting &amp; Documentation</li>
+            </ul>
+            <h4 class="label muted">Languages</h4>
+            <ul class="langs">
+              <li>English <span>C1</span></li>
+              <li>Persian <span>Native</span></li>
+              <li>Turkish <span>B2</span></li>
+              <li>French <span>A2–B1</span></li>
+              <li>Italian <span>A1</span></li>
+            </ul>
           </div>
         </div>
-        <div class="cert-body">
-          <div class="cert-issuer">Accenture · Forage</div>
-          <div class="cert-name">Data Analytics &amp; Visualization</div>
-          <div class="cert-meta">Virtual Experience · Jan 2024</div>
-          <span class="cert-btn">View Certificate →</span>
-        </div>
-      </a>
+      </details>
 
-      <a class="cert-card reveal" href="https://www.coursera.org/account/accomplishments/verify/AZCZ4FV0HUBH" target="_blank" rel="noopener">
-        <div class="cert-preview no-img">
-          <img class="cert-thumb" src="certs/asana.jpg" alt="Get Started with Asana certificate" loading="lazy"
-               onload="this.closest('.cert-preview').classList.remove('no-img')" onerror="this.remove()">
-          <div class="cert-fallback">
-            <span class="cert-seal">✦</span>
-            <span class="cert-fallback-issuer">Asana</span>
-            <span class="cert-fallback-tag">Course Certificate</span>
+      <!-- 04 Certifications -->
+      <details class="acc">
+        <summary>
+          <span class="label muted">04</span>
+          <h3>Certifications</h3>
+          <p>Courses from Google, Accenture, Asana, Anthropic and UPCG Genève.</p>
+          <span class="acc__toggle" aria-hidden="true"></span>
+        </summary>
+        <div class="acc__body certs">
+          <div class="item">
+            <span class="label muted">Google · Coursera</span>
+            <h4><a href="https://www.coursera.org/account/accomplishments/specialization/X6G5KAV9KP5Y" target="_blank" rel="noopener">Google Data Analytics <span aria-hidden="true">↗</span></a></h4>
+            <p>Professional Certificate · Aug 2025</p>
+          </div>
+          <div class="item">
+            <span class="label muted">Google · Coursera</span>
+            <h4><a href="https://www.coursera.org/account/accomplishments/professional-cert/certificate/6FMC352XM6HU" target="_blank" rel="noopener">Google Project Management <span aria-hidden="true">↗</span></a></h4>
+            <p>Professional Certificate</p>
+          </div>
+          <div class="item">
+            <span class="label muted">Accenture · Forage</span>
+            <h4><a href="https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Accenture%20North%20America/hzmoNKtzvAzXsEqx8_Accenture%20North%20America_hjawJRHubfAEHTi2M_1706624607907_completion_certificate.pdf" target="_blank" rel="noopener">Data Analytics &amp; Visualization <span aria-hidden="true">↗</span></a></h4>
+            <p>Virtual Experience · Jan 2024</p>
+          </div>
+          <div class="item">
+            <span class="label muted">Coursera</span>
+            <h4><a href="https://www.coursera.org/account/accomplishments/verify/AZCZ4FV0HUBH" target="_blank" rel="noopener">Get Started with Asana <span aria-hidden="true">↗</span></a></h4>
+            <p>Course Certificate · Jul 2025</p>
+          </div>
+          <div class="item">
+            <span class="label muted">Anthropic Education</span>
+            <h4><a href="https://verify.skilljar.com/c/9v55zsn74bdh" target="_blank" rel="noopener">Claude 101 <span aria-hidden="true">↗</span></a></h4>
+            <p>Course Certificate · Mar 2026</p>
+          </div>
+          <div class="item">
+            <span class="label muted">Université Populaire du Canton de Genève</span>
+            <h4><a href="certs/NAYEBKHIL%20Iraj%2C%20A2.pdf" target="_blank" rel="noopener">French Language — A2 <span aria-hidden="true">↗</span></a></h4>
+            <p>Attestation · Feb 2026</p>
           </div>
         </div>
-        <div class="cert-body">
-          <div class="cert-issuer">Coursera</div>
-          <div class="cert-name">Get Started with Asana</div>
-          <div class="cert-meta">Course Certificate · Jul 2025</div>
-          <span class="cert-btn">View Certificate →</span>
-        </div>
-      </a>
-
-      <a class="cert-card reveal" href="https://verify.skilljar.com/c/9v55zsn74bdh" target="_blank" rel="noopener">
-        <div class="cert-preview no-img">
-          <img class="cert-thumb" src="certs/claude-101.jpg" alt="Claude 101 certificate" loading="lazy"
-               onload="this.closest('.cert-preview').classList.remove('no-img')" onerror="this.remove()">
-          <div class="cert-fallback">
-            <span class="cert-seal">✦</span>
-            <span class="cert-fallback-issuer">Anthropic</span>
-            <span class="cert-fallback-tag">Course Certificate</span>
-          </div>
-        </div>
-        <div class="cert-body">
-          <div class="cert-issuer">Anthropic Education</div>
-          <div class="cert-name">Claude 101</div>
-          <div class="cert-meta">Course Certificate · Mar 2026</div>
-          <span class="cert-btn">View Certificate →</span>
-        </div>
-      </a>
-
-      <a class="cert-card reveal" href="certs/NAYEBKHIL Iraj, A2.pdf" target="_blank" rel="noopener">
-        <div class="cert-preview no-img">
-          <img class="cert-thumb" src="certs/upcg-french-a2.png" alt="UPCG French A2 certificate" loading="lazy"
-               onload="this.closest('.cert-preview').classList.remove('no-img')" onerror="this.remove()">
-          <div class="cert-fallback">
-            <span class="cert-seal">✦</span>
-            <span class="cert-fallback-issuer">UPCG</span>
-            <span class="cert-fallback-tag">Attestation d'assiduité</span>
-          </div>
-        </div>
-        <div class="cert-body">
-          <div class="cert-issuer">Université Populaire du Canton de Genève</div>
-          <div class="cert-name">French Language — A2</div>
-          <div class="cert-meta">Attestation · Feb 2026</div>
-          <span class="cert-btn">View Certificate →</span>
-        </div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- ===================== CONTACT ===================== -->
-  <section id="contact" class="section wrap contact">
-    <h2 class="section-label reveal"><span class="sl-chip"><span class="idx">06</span> Contact</span></h2>
-    <div class="contact-grid">
-      <div class="reveal">
-        <ul class="contact-links">
-          <li><a href="mailto:iraj.nayebkhil@unige.ch"><span class="c-key">Email</span><span>iraj.nayebkhill@hotmail.com</span></a></li>
-          <li><a href="https://www.linkedin.com/in/iraj-nayebkhil" target="_blank" rel="noopener"><span class="c-key">LinkedIn</span><span>/in/iraj-nayebkhil →</span></a></li>
-          <li><a href="https://github.com/LEon3209" target="_blank" rel="noopener"><span class="c-key">GitHub</span><span>@LEon3209 →</span></a></li>
-          <li><a href="cv.pdf" download><span class="c-key">Curriculum Vitae</span><span>Download PDF →</span></a></li>
-        </ul>
-      </div>
-    </div>
-  </section>
+      </details>
+    </section>
 
   </main>
 
-  <footer>
-    <span>© 2026 Iraj Nayebkhil</span>
-    <span>Geneva · Switzerland</span>
-    <span>Built with HTML · CSS · JS</span>
+  <!-- ===================== CONTACT ===================== -->
+  <footer class="contact" id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title">Let's talk about what's next.</h2>
+    <p>Have a question, a project or an opportunity in mind? Send a note and I'll get back to you.</p>
+    <a class="btn btn-primary btn-lg" href="mailto:irajnayebkhill@hotmail.com">Get in touch</a>
+    <div class="contact__links label">
+      <a href="https://www.linkedin.com/in/iraj-nayebkhil" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+      <a href="https://github.com/LEon3209" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+      <a href="cv.pdf" download>CV (PDF) <span aria-hidden="true">↓</span></a>
+    </div>
+    <div class="contact__foot label">
+      <span>© 2026 Iraj Nayebkhil</span>
+      <span>Geneva · Switzerland</span>
+    </div>
   </footer>
 
   <script src="projects.js"></script>

@@ -37,7 +37,7 @@
   border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
-  background: #0c0a12;
+  background: var(--bg-2);
   max-width: 740px;
   height: min(86vh, 1010px);
 }
@@ -99,7 +99,7 @@
   gap: 1rem;
   transition: color 0.25s ease;
 }
-.nb-sec > summary:hover { color: #fff; }
+.nb-sec > summary:hover { color: var(--accent); }
 .nb-sec > summary::-webkit-details-marker { display: none; }
 .nb-sec > summary::after { content: "+"; font-family: var(--mono); color: var(--purple-hi); font-size: 1rem; }
 .nb-sec[open] > summary { border-bottom: 1px solid var(--border); }
