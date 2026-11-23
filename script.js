@@ -98,8 +98,26 @@ document.addEventListener('DOMContentLoaded', () => {
     .map((a) => document.querySelector(a.getAttribute('href')))
     .filter(Boolean);
 
+  // collapse while scrolling down, expand when scrolling back up
+  let lastY = window.scrollY;
+  function updateMini() {
+    const y = window.scrollY;
+    if (y <= 80) nav.classList.remove('is-mini');
+    else if (y > lastY + 4) nav.classList.add('is-mini');
+    else if (y < lastY - 4) nav.classList.remove('is-mini');
+    else return; // ignore tiny jitters
+    lastY = y;
+  }
+  // touch screens have no hover: a tap on the pill opens it
+  nav.addEventListener('click', (e) => {
+    if (nav.classList.contains('is-mini') && !e.target.closest('a')) {
+      e.preventDefault();
+      nav.classList.remove('is-mini');
+    }
+  });
+
   function update() {
-    nav.classList.toggle('is-mini', window.scrollY > 80);
+    updateMini();
 
     let current = null;
     sections.forEach((s) => { if (s.getBoundingClientRect().top < 200) current = s.id; });
