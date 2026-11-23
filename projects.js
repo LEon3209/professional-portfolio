@@ -1,6 +1,19 @@
 // Generated from projects.json — edit that file, then mirror it here.
 window.PROJECTS = [
   {
+    "title": "Bridging the Digital Divide",
+    "description": "Live microlearning series for the Geneva Research Lab for Digital Impact and UNICEF: coordinated production of the video modules, built the scene-by-scene tracker the team used daily, and set up the course on UNICEF Agora with interactive H5P quizzes.",
+    "tags": [
+      "Microlearning",
+      "Project Coordination"
+    ],
+    "category": "Digital Learning",
+    "date": "2026-09-01",
+    "page": "projects/bridging-the-digital-divide-microlearning.html",
+    "image": "projects/covers/plates/bridging-the-digital-divide-microlearning.webp",
+    "featured": true
+  },
+  {
     "title": "Boards vs Executive Committees",
     "description": "HR-analytics project comparing the composition of Boards of Directors and Executive Committees — data cleaning, exploratory analysis, and linear regression on member attributes.",
     "tags": [
@@ -203,8 +216,7 @@ window.PROJECTS = [
     "category": "Finance",
     "date": "2024-06-01",
     "page": "projects/portfolio-optimization-financial-analysis.html",
-    "image": "projects/covers/previews/portfolio-optimization-financial-analysis.png",
-    "featured": true
+    "image": "projects/covers/previews/portfolio-optimization-financial-analysis.png"
   },
   {
     "title": "JP Morgan Market Memorandum",
